@@ -693,3 +693,186 @@ body {
   border-color: var(--color-tech-gold) !important;
   color: var(--color-tech-gold) !important;
 }
+
+/* Opening hero (UX004): a live drifting galaxy filling the frame, with the
+   content sliding in over a legibility scrim on the left. */
+.opening-hero {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 68% 45%, #0b1424 0%, #060912 55%, #04060d 100%);
+}
+
+.hero-galaxy {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-galaxy canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Scrim: darkens the left third so the content stays readable over the stars. */
+.opening-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    rgba(4, 6, 13, 0.92) 0%,
+    rgba(4, 6, 13, 0.72) 34%,
+    rgba(4, 6, 13, 0.15) 58%,
+    rgba(4, 6, 13, 0) 78%
+  );
+  pointer-events: none;
+}
+
+.opening-content {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.opening-eyebrow {
+  font-family: var(--font-data);
+  font-size: var(--type-xs);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-signal-violet-bright);
+}
+
+.opening-hero .opening-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  line-height: 1.02;
+  margin-bottom: 0.1rem;
+  color: var(--color-star-white);
+  text-align: left;
+}
+
+.opening-hero .opening-line {
+  font-size: var(--type-md);
+  color: var(--color-text-primary);
+  max-width: 32rem;
+}
+
+.opening-explainer {
+  font-size: var(--type-base);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 34rem;
+}
+
+.opening-explainer-2 {
+  color: var(--color-text-tertiary);
+}
+
+@media (max-height: 780px) {
+  .opening-explainer-2 {
+    display: none;
+  }
+  .opening-content {
+    gap: 0.5rem;
+  }
+}
+
+.opening-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0.4rem 0;
+  display: grid;
+  gap: 0.4rem;
+  max-width: 34rem;
+}
+
+.opening-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.9rem;
+  align-items: baseline;
+  padding: 0.4rem 0.75rem;
+  border-left: 2px solid rgba(155, 126, 240, 0.4);
+  background: rgba(12, 18, 32, 0.4);
+  border-radius: 0 6px 6px 0;
+}
+
+.opening-step-n {
+  grid-row: 1 / 3;
+  font-family: var(--font-data);
+  font-size: var(--type-md);
+  color: var(--color-tech-gold);
+  align-self: center;
+}
+
+.opening-step-title {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.opening-step-body {
+  font-size: var(--type-sm);
+  color: var(--color-text-secondary);
+}
+
+.opening-hero .opening-actions {
+  justify-content: flex-start;
+  margin-top: 0.4rem;
+}
+
+.opening-hero .opening-tone {
+  font-size: var(--type-sm);
+  color: var(--color-text-tertiary);
+  max-width: 32rem;
+  text-align: left;
+}
+
+/* Staggered slide-in entrance. */
+.anim-in {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: slide-in 0.8s var(--ease-out) forwards;
+}
+
+@keyframes slide-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .opening-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 6, 13, 0.55) 0%,
+      rgba(4, 6, 13, 0.86) 45%,
+      rgba(4, 6, 13, 0.95) 100%
+    );
+  }
+  .opening-content {
+    justify-content: flex-end;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Reduced motion: no entrance animation, content simply present. */
+@media (prefers-reduced-motion: reduce) {
+  .anim-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

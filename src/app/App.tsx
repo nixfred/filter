@@ -14,6 +14,7 @@ import { SilenceReport } from '../components/SilenceReport/SilenceReport';
 import { SimulationControls } from '../components/SimulationControls/SimulationControls';
 import { StatusBar } from '../components/StatusBar/StatusBar';
 import { ContactFlash } from '../components/ContactFlash/ContactFlash';
+import { HeroGalaxy } from '../components/HeroGalaxy/HeroGalaxy';
 import { usePreferences, useSimulation, useStores } from './providers';
 import {
   createScenario,
@@ -321,28 +322,69 @@ export function App() {
       </div>
 
       {screen === 'opening' ? (
-        <main id="main" className="opening">
-          <h1 className="opening-title">{COPY.title}</h1>
-          <p className="opening-line">{COPY.supportingLine}</p>
-          <div className="opening-actions">
-            <button
-              type="button"
-              className="button-primary"
-              data-testid="create-galaxy"
-              onClick={() => setScreen('config')}
+        <main id="main" className="opening-hero">
+          <HeroGalaxy reducedMotion={reducedMotion} />
+          <div className="opening-scrim" aria-hidden="true" />
+          <div className="opening-content">
+            <p className="opening-eyebrow anim-in" style={{ animationDelay: '0.05s' }}>
+              {COPY.eyebrow}
+            </p>
+            <h1 className="opening-title anim-in" style={{ animationDelay: '0.15s' }}>
+              {COPY.title}
+            </h1>
+            <p className="opening-line anim-in" style={{ animationDelay: '0.3s' }}>
+              {COPY.supportingLine}
+            </p>
+            <p className="opening-explainer anim-in" style={{ animationDelay: '0.45s' }}>
+              {COPY.explainer}
+            </p>
+            <p
+              className="opening-explainer opening-explainer-2 anim-in"
+              style={{ animationDelay: '0.6s' }}
             >
-              {COPY.createGalaxy}
-            </button>
-            <button
-              type="button"
-              className="button-outline"
-              data-testid="run-preset"
-              onClick={() => setPresetsOpen(true)}
+              {COPY.explainerTwo}
+            </p>
+            <ol className="opening-steps">
+              {COPY.steps.map((step, index) => (
+                <li
+                  key={step.n}
+                  className="opening-step anim-in"
+                  style={{ animationDelay: `${0.75 + index * 0.12}s` }}
+                >
+                  <span className="opening-step-n">{step.n}</span>
+                  <span className="opening-step-title">{step.title}</span>
+                  <span className="opening-step-body">{step.body}</span>
+                </li>
+              ))}
+            </ol>
+            <div
+              className="opening-actions anim-in"
+              style={{ animationDelay: `${0.75 + COPY.steps.length * 0.12 + 0.1}s` }}
             >
-              {COPY.runPreset}
-            </button>
+              <button
+                type="button"
+                className="button-primary"
+                data-testid="create-galaxy"
+                onClick={() => setScreen('config')}
+              >
+                {COPY.createGalaxy}
+              </button>
+              <button
+                type="button"
+                className="button-outline"
+                data-testid="run-preset"
+                onClick={() => setPresetsOpen(true)}
+              >
+                {COPY.runPreset}
+              </button>
+            </div>
+            <p
+              className="opening-tone anim-in"
+              style={{ animationDelay: `${0.75 + COPY.steps.length * 0.12 + 0.25}s` }}
+            >
+              {COPY.toneLine}
+            </p>
           </div>
-          <p className="opening-tone">{COPY.toneLine}</p>
         </main>
       ) : null}
 
