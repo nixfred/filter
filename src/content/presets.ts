@@ -1,13 +1,17 @@
-// The eight curated presets (FR010, packet 02 preset ideas). Control values
-// are the preset definitions the G4 property tests enforce; acceptance bands
-// live beside them per docs/TEST_PLAN.md 2.2.1.
-import type { MainControls } from '../simulation/types';
+// The eight packet presets (FR010, packet 02 preset ideas) plus one showcase
+// preset that exercises the advanced settings. Control values are the preset
+// definitions the property tests enforce; acceptance bands live beside them
+// per docs/TEST_PLAN.md 2.2.1.
+import type { AdvancedParams, MainControls } from '../simulation/types';
 
 export interface Preset {
   id: string;
   name: string;
   description: string;
   controls: MainControls;
+  /** Optional advanced overrides. Picking the preset opens the advanced
+   *  panel so the settings are visible and adjustable (FR003, FR010). */
+  advanced?: AdvancedParams;
 }
 
 export const PRESETS: Preset[] = [
@@ -113,6 +117,28 @@ export const PRESETS: Preset[] = [
       longTermSurvival: 0.9,
       detectableCommunication: 0.95,
       interstellarExpansion: 0.5,
+    },
+  },
+  {
+    id: 'deep-time',
+    name: 'Deep Time',
+    description:
+      'Fifty billion years, a dense galaxy, and frontiers that cross it at half light speed. Opens the advanced settings.',
+    controls: {
+      lifeEmergence: 0.7,
+      intelligenceEmergence: 0.6,
+      technologicalTransition: 0.7,
+      longTermSurvival: 0.92,
+      detectableCommunication: 0.7,
+      interstellarExpansion: 0.85,
+    },
+    advanced: {
+      runHorizonYears: 50_000_000_000,
+      representativePopulationSize: 8192,
+      expansionEffectiveSpeedFractionC: 0.5,
+      expansionLaunchDelayYears: 0,
+      expansionSettlementDelayYears: 0,
+      detectionRecognitionThreshold: 0.05,
     },
   },
 ];

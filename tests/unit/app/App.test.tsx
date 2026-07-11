@@ -77,14 +77,15 @@ describe('configuration state', () => {
     expect(screen.getByRole('button', { name: 'Start' })).toBeInTheDocument();
   });
 
-  it('RUN A PRESET opens the picker with all eight presets', () => {
+  it('RUN A PRESET opens the picker with the nine presets', () => {
     renderApp();
     fireEvent.click(screen.getByTestId('run-preset'));
     const dialog = screen.getByRole('dialog');
     expect(dialog).toBeInTheDocument();
     // Count the preset cards inside the dialog (the opening also has step
-    // list items, so scope to the picker).
-    expect(within(dialog).getAllByRole('listitem')).toHaveLength(8);
+    // list items, so scope to the picker). Eight packet presets plus the
+    // advanced showcase.
+    expect(within(dialog).getAllByRole('listitem')).toHaveLength(9);
     fireEvent.click(screen.getByTestId('preset-silent-galaxy'));
     // Selection lands in configuration with the preset label shown.
     expect(screen.getByText('Preset: The Silent Galaxy')).toBeInTheDocument();

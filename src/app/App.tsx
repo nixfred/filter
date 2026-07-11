@@ -203,7 +203,7 @@ export function App() {
 
   function choosePreset(preset: Preset) {
     setControls({ ...preset.controls });
-    setAdvanced({});
+    setAdvanced(preset.advanced ? { ...preset.advanced } : {});
     setPresetName(preset.name);
     setPresetsOpen(false);
     setScreen('config');

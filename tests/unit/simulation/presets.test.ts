@@ -42,7 +42,12 @@ function measure(presetId: string): PresetStats {
   let interstellar = 0;
   let medianLife = 0;
   for (let s = 0; s < PRESET_SEED_BATCH_SIZE; s++) {
+    // Include the preset's advanced overrides (for example expansion speed and
+    // delays), but cap population and horizon to test friendly values so the
+    // batch stays fast and deterministic; the character under test is the
+    // preset definition, not the run size.
     const scenario = createScenario(1000 + s * 7, 2000 + s * 13, preset.controls, {
+      ...(preset.advanced ?? {}),
       representativePopulationSize: 256,
       runHorizonYears: 10_000_000_000,
     });
@@ -68,8 +73,14 @@ describe('preset outcome character (FR010)', () => {
   const stats = new Map<string, PresetStats>();
   for (const preset of PRESETS) stats.set(preset.id, measure(preset.id));
 
-  it('has all eight packet presets', () => {
-    expect(PRESETS).toHaveLength(8);
+  it('has the eight packet presets plus the advanced showcase', () => {
+    expect(PRESETS).toHaveLength(9);
+    expect(PRESETS.filter((p) => p.advanced).map((p) => p.id)).toEqual(['deep-time']);
+  });
+
+  it('Deep Time showcases fast expansion, reaching interstellar in most runs', () => {
+    const s = stats.get('deep-time')!;
+    expect(s.interstellarFraction).toBeGreaterThanOrEqual(0.5);
   });
 
   it('The Silent Galaxy is effectively silent', () => {
