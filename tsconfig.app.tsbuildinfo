@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/vite_env.d.ts","./src/app/app.tsx","./src/simulation/model_version.ts","./tests/setup.ts","./tests/accessibility/core_flows.spec.ts","./tests/e2e/scaffold_smoke.spec.ts","./tests/unit/app/app.test.tsx","./tests/unit/simulation/model_version.test.ts"],"version":"6.0.3"}

@@ -1,0 +1,53 @@
+/* Global shell styles for the opening state (UX004). Full Observatory Elegy
+   treatment lands at G5 per docs/EXECUTION_PLAN.md. */
+body {
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-interface);
+  font-size: var(--type-base);
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.opening {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+.opening-title {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: var(--color-star-white);
+}
+
+.opening-line {
+  font-size: var(--type-md);
+  color: var(--color-text-secondary);
+  max-width: 34rem;
+}
+
+.opening-tone {
+  font-size: var(--type-sm);
+  color: var(--color-text-secondary);
+  max-width: 34rem;
+}
+
+.opening-footer {
+  position: fixed;
+  bottom: 1rem;
+  font-family: var(--font-data);
+  font-size: var(--type-xs);
+  color: var(--color-text-secondary);
+}

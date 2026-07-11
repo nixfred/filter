@@ -1,0 +1,20 @@
+name: Bug report
+description: Something broke, rendered wrong, or behaved differently than documented.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Include the browser, device, and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: share-url
+    attributes:
+      label: Share URL
+      description: If the problem involves a specific run, paste its share URL. The URL reproduces the exact simulation.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce

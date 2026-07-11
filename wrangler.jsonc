@@ -1,0 +1,20 @@
+{
+  // The Great Filter, Cloudflare Pages Direct Upload configuration.
+  // Source of truth for supported Pages settings (INT004, packet 03 section 11).
+
+  // Pages project name. Matches ruling R003 and the CLOUDFLARE_PAGES_PROJECT variable.
+  "name": "filter",
+
+  // Static build output that Wrangler uploads. Vite writes here (INT004 item 2).
+  "pages_build_output_dir": "./dist",
+
+  // Pinned compatibility date. Bump deliberately, never floating (packet 03 section 11 item 3).
+  "compatibility_date": "2026-07-11"
+
+  // No "vars": no runtime variables in v1, and never a secret value here (packet 03 section 11 item 6).
+  // No "kv_namespaces", "d1_databases", "r2_buckets", "durable_objects": no bindings in v1 (ruling R013,
+  //   packet 03 section 11 item 7 and the default static deployment clause).
+  // No Pages Functions: this is a static site with no server logic in v1 (ruling R013).
+  // Preview and production differences are added here only when an approved feature needs them,
+  //   with a comment explaining each override (packet 03 section 11 items 5 and 8).
+}

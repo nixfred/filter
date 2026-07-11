@@ -1,0 +1,18 @@
+# Dependency update policy (INT005, packet 03 section 4 items 5 to 7).
+# Low risk development dependencies are grouped; majors are never auto merged.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-minor-patch:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

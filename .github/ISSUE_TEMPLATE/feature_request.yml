@@ -1,0 +1,15 @@
+name: Feature request
+description: An idea for the simulator, the model, or the presentation.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: What would a visitor learn, feel, or be able to do that they cannot today?

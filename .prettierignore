@@ -1,0 +1,16 @@
+# Build and dependency output
+dist/
+coverage/
+playwright-report/
+test-results/
+package-lock.json
+
+# Prose and planning documents keep their hand written formatting
+*.md
+docs/
+FILTER_BUILD_PACKET/
+LICENSE
+.claude/
+
+# JSONC with comments, not standard JSON
+wrangler.jsonc
