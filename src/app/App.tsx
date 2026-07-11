@@ -202,7 +202,9 @@ export function App() {
         return;
       }
       // The keyboard help is reachable from every screen (ACCESSIBILITY 1.1).
-      if (event.key === '?') {
+      // Accept both the question mark key and Shift plus slash, since some
+      // browsers and layouts report the physical key rather than the glyph.
+      if (event.key === '?' || (event.key === '/' && event.shiftKey)) {
         setHelpOpen(true);
         return;
       }

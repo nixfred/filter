@@ -4,6 +4,9 @@ import { test, expect } from '@playwright/test';
 // motion and power toggles (ACC001, ACC003, NFR002).
 test('the question mark key opens the keyboard help (ACC001)', async ({ page }) => {
   await page.goto('/');
+  // Wait for the app to mount so the global keydown listener is attached
+  // before pressing the shortcut (the listener is set in a React effect).
+  await expect(page.getByTestId('create-galaxy')).toBeVisible();
   await page.keyboard.press('?');
   await expect(page.getByRole('heading', { name: 'Keyboard shortcuts' })).toBeVisible();
   await expect(page.getByText('Start, pause, or resume')).toBeVisible();
