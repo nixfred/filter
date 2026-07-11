@@ -13,6 +13,7 @@ interface Props {
   onToggleLabels(): void;
   onShare(): void;
   onViewReport(): void;
+  onStartOver(): void;
 }
 
 export function StatusBar(props: Props) {
@@ -22,6 +23,14 @@ export function StatusBar(props: Props) {
         {formatYears(props.displayYear)}
       </span>
       <div className="status-actions">
+        <button
+          type="button"
+          className="button-startover"
+          data-testid="start-over"
+          onClick={props.onStartOver}
+        >
+          Start over
+        </button>
         <button type="button" data-testid="toggle-ledger" onClick={props.onToggleLedger}>
           Ledger
         </button>
