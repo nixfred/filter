@@ -1,0 +1,110 @@
+
+> filter@0.1.0 check:all
+> npm run format:check && npm run lint && npm run typecheck && npm run test:simulation && npm run test:coverage && npm run build && npm run check:bundle && npm run test:e2e && npm run test:a11y
+
+
+> filter@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> filter@0.1.0 lint
+> eslint .
+
+
+> filter@0.1.0 typecheck
+> tsc -b
+
+
+> filter@0.1.0 test:simulation
+> vitest run tests/unit/simulation
+
+
+ RUN  v4.1.10 /private/tmp/claude-501/-Users-pi-Projects-filter-nixfred-com/cf29bf2a-af38-415b-a9fa-f7df0e06ad6c/scratchpad/clean-clone
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  09:41:36
+   Duration  369ms (transform 17ms, setup 31ms, import 12ms, tests 1ms, environment 253ms)
+
+
+> filter@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v4.1.10 /private/tmp/claude-501/-Users-pi-Projects-filter-nixfred-com/cf29bf2a-af38-415b-a9fa-f7df0e06ad6c/scratchpad/clean-clone
+      Coverage enabled with v8
+
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  09:41:36
+   Duration  569ms (transform 46ms, setup 74ms, import 65ms, tests 72ms, environment 548ms)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 2/2 )
+Branches     : 100% ( 0/0 )
+Functions    : 100% ( 1/1 )
+Lines        : 100% ( 2/2 )
+================================================================================
+
+> filter@0.1.0 build
+> vite build && node scripts/write_build_metadata.mjs
+
+vite v8.1.4 building client environment for production...
+[2Ktransforming...✓ 19 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.68 kB │ gzip:  0.41 kB
+dist/assets/index-C-f2x1n7.css    1.91 kB │ gzip:  0.86 kB
+dist/assets/index-BZn74GzC.js   191.02 kB │ gzip: 60.24 kB
+
+✓ built in 232ms
+build.json written: {"commit":"824ac02b736257104618a38bc8893dca383dc400","buildTime":"2026-07-11T13:41:38.004Z","appVersion":"0.1.0","simulationModelVersion":1}
+
+> filter@0.1.0 check:bundle
+> node scripts/check_bundle.mjs
+
+ok    dist/assets/index-BZn74GzC.js  raw 191024  gzip 59552  ceiling 184320
+ok    dist/assets/index-C-f2x1n7.css  raw 1919  gzip 870  ceiling 524288
+ok    dist/build.json  raw 158  gzip 146  ceiling 524288
+ok    dist/favicon.svg  raw 755  gzip 345  ceiling 524288
+ok    dist/index.html  raw 683  gzip 416  ceiling 524288
+initial JS total gzip: 59552 (ceiling 307200)
+check_bundle: all ceilings met.
+
+> filter@0.1.0 test:e2e
+> playwright test tests/e2e
+
+
+Running 5 tests using 5 workers
+
+  ✓  3 [chromium] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (121ms)
+  ✓  5 [mobile-chrome] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (140ms)
+  ✓  1 [mobile-safari] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (732ms)
+  ✓  2 [webkit] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (752ms)
+  ✓  4 [firefox] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (721ms)
+
+  5 passed (2.1s)
+
+> filter@0.1.0 test:a11y
+> playwright test tests/accessibility
+
+
+Running 5 tests using 5 workers
+
+  ✓  2 [chromium] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (364ms)
+  ✓  3 [mobile-chrome] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (385ms)
+  ✓  4 [mobile-safari] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (853ms)
+  ✓  1 [webkit] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (857ms)
+  ✓  5 [firefox] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (1.0s)
+
+  5 passed (2.5s)

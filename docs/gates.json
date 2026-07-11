@@ -9,7 +9,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "Product",
-  "status": "PLANNED"
+  "status": "PARTIAL (G1 opening shell and title landed; content lint mechanism at G4, production title assertion at G-LAUNCH)"
  },
  {
   "id": "BR002",
@@ -645,7 +645,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "Quality",
-  "status": "PLANNED"
+  "status": "PASSING (G1, docs/evidence/g1_check_all.txt)"
  },
  {
   "id": "ACC001",
@@ -729,7 +729,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G1, safety scan clean, no tracked secrets)"
  },
  {
   "id": "SEC002",
@@ -789,7 +789,7 @@
   "first_gate": "G0",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G0, docs/evidence/planning/g0_repo_settings.txt)"
  },
  {
   "id": "SEC007",
@@ -801,7 +801,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G1, pinned dependencies, committed lock file, no CDN code)"
  },
  {
   "id": "SEC008",
@@ -885,7 +885,7 @@
   "first_gate": "G0",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G0, tag gate/G0-20260711, evidence docs/evidence/planning/)"
  },
  {
   "id": "INT002",
@@ -921,7 +921,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G1, wrangler.jsonc per CI_CD section 8)"
  },
  {
   "id": "INT005",
@@ -957,7 +957,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G1, .github hygiene files on disk)"
  },
  {
   "id": "OPS001",
@@ -969,7 +969,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G1, 18 scripts, check:all deterministic, docs/evidence/g1_check_all.txt)"
  },
  {
   "id": "OPS002",
@@ -981,7 +981,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G1, .nvmrc 26.5.0, npm ci proven in docs/evidence/g1_clean_clone_check.txt)"
  },
  {
   "id": "OPS003",
@@ -993,7 +993,7 @@
   "first_gate": "G0",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G0, tag gate/G0-20260711, docs/deployment.md)"
  },
  {
   "id": "OPS004",
