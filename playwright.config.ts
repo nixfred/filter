@@ -1,5 +1,20 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// The production smoke project runs only when explicitly requested with
+// PLAYWRIGHT_SMOKE=1 (the post_deploy_smoke CI job). It targets the live
+// custom domain, so it must never run in the local or ci.yml browser suite.
+const smokeEnabled = process.env.PLAYWRIGHT_SMOKE === '1';
+
+const smokeProject = smokeEnabled
+  ? [
+      {
+        name: 'production-smoke',
+        use: { ...devices['Desktop Chrome'], baseURL: 'https://filter.nixfred.com' },
+        testMatch: /production_smoke\.spec\.ts/,
+      },
+    ]
+  : [];
+
 // Browser matrix per docs/TEST_PLAN.md section 8.2 (ruling R021, NFR008).
 // Dedicated test port, server reuse disabled (GOAL.md operating law 10).
 // Retries 0 so intermittent failures surface loudly (NFR010, TEST_PLAN 8.3).
@@ -15,11 +30,6 @@ export default defineConfig({
   use: {
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-  },
-  webServer: {
-    command: 'npm run preview',
-    port: 4517,
-    reuseExistingServer: false,
   },
   projects: [
     {
@@ -47,12 +57,15 @@ export default defineConfig({
       use: { ...devices['Pixel 5'], baseURL: 'http://localhost:4517' },
       testIgnore: /production_smoke\.spec\.ts/,
     },
-    {
-      // Runs only the post deploy smoke spec against production (docs/TEST_PLAN.md 8.2).
-      // No matching spec exists before G6, so this project is inert until then.
-      name: 'production-smoke',
-      use: { ...devices['Desktop Chrome'], baseURL: 'https://filter.nixfred.com' },
-      testMatch: /production_smoke\.spec\.ts/,
-    },
+    ...smokeProject,
   ],
+  // The local preview server is only needed for the local browser matrix, not
+  // the production smoke run against the live domain.
+  webServer: smokeEnabled
+    ? undefined
+    : {
+        command: 'npm run preview',
+        port: 4517,
+        reuseExistingServer: false,
+      },
 });

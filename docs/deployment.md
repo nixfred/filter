@@ -148,3 +148,25 @@ Repository created and pushed: https://github.com/nixfred/filter (public, MIT, d
 Initial planning release: https://github.com/nixfred/filter/releases/tag/v0.1.0-planning
 Security readback evidence: docs/evidence/planning/g0_repo_settings.txt (secret scanning enabled, push protection enabled, Dependabot vulnerability alerts enabled).
 Safety scan evidence: docs/evidence/planning/g0_safety_scan.txt.
+
+## G6 CI/CD and Cloudflare Pages record (2026-07-11)
+
+Cloudflare Pages project created: filter (Direct Upload), production branch main, generated subdomain filter-bqk.pages.dev (operational fallback, retained per packet 03 section 12).
+GitHub repository variables set: CLOUDFLARE_PAGES_PROJECT=filter, PRODUCTION_DOMAIN=filter.nixfred.com, NODE_VERSION=26.
+GitHub secret set: CLOUDFLARE_ACCOUNT_ID (a non secret identifier, stored in the secrets context because the workflows read it there).
+
+### Fred set credential (PENDING P005)
+
+CLOUDFLARE_API_TOKEN is intentionally NOT set from the local broad personal token. Both deploy workflows guard on its presence and skip cleanly until it exists, then activate automatically. Fred creates a Cloudflare API token scoped narrowly to Account, Cloudflare Pages, Edit for the Frednix account, and sets it once:
+
+  gh secret set CLOUDFLARE_API_TOKEN --repo nixfred/filter
+
+This keeps a broad personal token out of a public repository's Actions, per BUILD.md standing law 16 and packet 03 section 10 (scope as narrowly as practical).
+
+### Custom domain and production deploy
+
+The custom domain filter.nixfred.com association and the first production deploy occur at G-LAUNCH, after Fred sets the token (P005) and approves launch (P003, REL006). The nixfred.com zone is active in the same account (zone id 0f553c816de4c7f59d6dfbfe1712aafd), so association is a Pages custom domain call plus DNS verification, documented in docs/OPERATIONS.md.
+
+### Preview access (PENDING P001)
+
+Cloudflare Access on preview deployments is configured on the Pages project after the token is set, defaulting to a one time PIN to frednix@gmail.com, until Fred opts into public previews.

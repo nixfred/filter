@@ -1,0 +1,26 @@
+# Block newly vulnerable dependencies at pull request time (SEC004,
+# docs/CI_CD.md section 5.2, packet 03 section 7).
+name: dependency_review
+
+on:
+  pull_request:
+    paths:
+      - package.json
+      - package-lock.json
+
+permissions: {}
+
+jobs:
+  dependency_review:
+    name: dependency_review
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/dependency-review-action@3b139cfc5fae8b618d3eae3675e383bb1769c019 # v4.5.0
+        with:
+          # High and above blocks by default (SEC004). A dated exception in
+          # docs/DECISIONS.md is the only way past a finding.
+          fail-on-severity: high

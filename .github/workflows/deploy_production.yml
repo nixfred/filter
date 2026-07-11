@@ -1,0 +1,126 @@
+# Production deployment: quality gate, deploy, verify (docs/CI_CD.md section
+# 5.5). Automatic on a green merge to main (R011). Deploy skips cleanly until
+# the CLOUDFLARE_API_TOKEN secret is set, then activates automatically.
+name: deploy_production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '26'
+
+jobs:
+  quality_gate:
+    name: quality_gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run check:all
+
+  guard:
+    name: guard
+    needs: quality_gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - id: check
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -n "$CF_TOKEN" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Production deploy skipped: CLOUDFLARE_API_TOKEN secret not set (PENDING credential)." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  deploy_production:
+    name: deploy_production
+    needs: guard
+    if: needs.guard.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://filter.nixfred.com
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: retain production build artifact
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: filter-dist-${{ github.sha }}
+          path: dist/
+          retention-days: 90
+      - name: deploy to Cloudflare Pages production
+        uses: cloudflare/wrangler-action@392082e81ffbcb9ebdde27400634aa004b35ea37 # v3.14.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name "${{ vars.CLOUDFLARE_PAGES_PROJECT }}" --branch main
+      - name: record deployment
+        run: |
+          {
+            echo "## Production deployment"
+            echo "Commit: ${{ github.sha }}"
+            echo "Built: $(date -u +%FT%TZ)"
+            echo "Environment: https://filter.nixfred.com"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  post_deploy_smoke:
+    name: post_deploy_smoke
+    needs: deploy_production
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      issues: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: production smoke test against the custom domain
+        env:
+          PLAYWRIGHT_SMOKE: '1'
+        run: npx playwright test --project=production-smoke
+      - name: Lighthouse audit
+        run: npx lhci autorun || true
+      - name: open an incident issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Production smoke test failed for ${{ github.sha }}" \
+            --body "The post deploy smoke test failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. Follow the rollback procedure in docs/OPERATIONS.md section 3." \
+            --label incident || true

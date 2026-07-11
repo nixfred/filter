@@ -41,3 +41,14 @@ Safe fallback: the R024 defaults stand as written.
 Impact of fallback: gates enforce the proposed numbers, all of which were chosen conservatively.
 Requirements affected: NFR001, NFR004, NFR005, ACC002, ACC005.
 Status: open.
+
+## P005 Cloudflare deploy token
+
+Decision needed: Fred creates and sets a narrowly scoped Cloudflare API token (Account, Cloudflare Pages, Edit) as the CLOUDFLARE_API_TOKEN GitHub secret.
+Owner: Fred (only he should mint the scoped token).
+Deadline gate: G-LAUNCH (the deploy cannot run without it).
+Safe fallback: the deploy workflows skip cleanly and report the skip; all other CI runs and gates pass. No pipeline breakage while the token is absent.
+Impact of fallback: preview and production deploys do not run until the token is set. Everything else, including the full quality gate, runs.
+Requirements affected: INT002, INT003, OPS005.
+Command: gh secret set CLOUDFLARE_API_TOKEN --repo nixfred/filter
+Status: open.

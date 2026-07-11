@@ -1,0 +1,7 @@
+# Redirects and route fallback (docs/CI_CD.md, packet 03 section 14).
+# The application is a single page. Share links carry their scenario in the
+# query string (?s=...) on the root path, so no client side path routing is
+# needed and no SPA catch all is required. This file is intentionally minimal:
+# a canonical host redirect or a pages.dev to custom domain redirect, if Fred
+# approves one, is added as a Cloudflare Redirect Rule rather than here
+# (packet 03 section 14 final clause). No rules are active in v1.

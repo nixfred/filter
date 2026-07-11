@@ -1,0 +1,72 @@
+# Isolated, protected preview deployment (docs/CI_CD.md section 5.4, SEC008,
+# R005, R012). Fork pull requests never reach the deploy job, so they never
+# receive a credential. Deploys skip cleanly until the CLOUDFLARE_API_TOKEN
+# secret is set (PENDING P001 credential), then activate automatically.
+name: deploy_preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '26'
+
+jobs:
+  guard:
+    name: guard
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - id: check
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          same_repo="${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository }}"
+          if [ -n "$CF_TOKEN" ] && [ "$same_repo" = "true" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Preview deploy skipped: missing CLOUDFLARE_API_TOKEN secret or untrusted fork." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  deploy_preview:
+    name: deploy_preview
+    needs: guard
+    if: needs.guard.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    environment: preview
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      # Mark the preview build noindex (R005, SEC008): the header file already
+      # sends X-Robots-Tag noindex on previews via the branch alias, and this
+      # env flag is available to the build for any in document marker.
+      - run: npm run build
+        env:
+          FILTER_PREVIEW: '1'
+      - name: deploy preview to Cloudflare Pages
+        uses: cloudflare/wrangler-action@392082e81ffbcb9ebdde27400634aa004b35ea37 # v3.14.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name "${{ vars.CLOUDFLARE_PAGES_PROJECT }}" --branch "preview-pr-${{ github.event.pull_request.number }}"
