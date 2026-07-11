@@ -11,7 +11,10 @@ describe('validateScenario', () => {
     const result = validateScenario(scenario);
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.scenario.controls.lifeEmergence).toBe(0.7);
+      // createScenario snaps controls to the uint16 wire grid so a run and its
+      // shared reproduction are identical (FR008), so the value is 0.7 within
+      // wire precision, not exactly 0.7.
+      expect(result.scenario.controls.lifeEmergence).toBeCloseTo(0.7, 4);
       expect(result.scenario.seedA).toBe(1);
     }
   });
