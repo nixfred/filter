@@ -170,3 +170,13 @@ The custom domain filter.nixfred.com association and the first production deploy
 ### Preview access (PENDING P001)
 
 Cloudflare Access on preview deployments is configured on the Pages project after the token is set, defaulting to a one time PIN to frednix@gmail.com, until Fred opts into public previews.
+
+## G-LAUNCH production launch record (2026-07-11)
+
+LIVE at https://filter.nixfred.com (Fred approved: "Launch!").
+Deploy method: local wrangler (npx wrangler@latest pages deploy dist --project-name filter --branch main), the reliable path for the fleet. The machine's global wrangler 4.88 hard-fails on /memberships with the scoped token; the current wrangler makes that check non-fatal. GitHub Actions deploy workflows remain guarded and dormant (P005 token unset by choice).
+Custom domain: filter.nixfred.com, CNAME to filter-bqk.pages.dev (proxied), certificate provisioned automatically in the same zone.
+Acceptance verified live: TLS 200, title and canonical, build.json commit matches the deployed main commit, security headers present (CSP, nosniff, referrer, permissions, frame DENY), robots indexable, no preview noindex, a full default run completes to the Silence Report with no application console error, and the production-smoke Playwright test passes against the domain.
+Lighthouse (live): performance 0.98, accessibility 1.00, SEO 1.00, best practices floor 0.90 met (ruling R025 excludes the deliberate no-source-maps and the external Cloudflare Email Obfuscation console injection).
+Rollback: two deployments retained and independently selectable; procedure in docs/OPERATIONS.md section 3.
+Open, non blocking, Fred owned: enable Cloudflare Web Analytics (INT006 beacon), turn off Email Obfuscation for the zone to clear the last console warning, and set the scoped CLOUDFLARE_API_TOKEN if the Actions deploy path is ever wanted (P005).

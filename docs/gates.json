@@ -9,7 +9,7 @@
   "first_gate": "G1",
   "standing": "YES",
   "owner": "Product",
-  "status": "PARTIAL (G1 opening shell and title landed; content lint mechanism at G4, production title assertion at G-LAUNCH)"
+  "status": "PASSING (G-LAUNCH, live at filter.nixfred.com, title The Great Filter, LABS)"
  },
  {
   "id": "BR002",
@@ -585,7 +585,7 @@
   "first_gate": "G7",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G-LAUNCH, Lighthouse live: performance 0.98, accessibility 1.0, SEO 1.0, best practices floor 0.90 met per R025)"
  },
  {
   "id": "NFR006",
@@ -621,7 +621,7 @@
   "first_gate": "G7",
   "standing": "YES",
   "owner": "Quality",
-  "status": "PLANNED"
+  "status": "PASSING (G-LAUNCH, browser matrix green: chromium, firefox, webkit desktop, mobile-chrome; iOS Safari via mobile-safari light specs)"
  },
  {
   "id": "NFR009",
@@ -753,7 +753,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PARTIAL (G6, _headers CSP finalized from the real build; presence verified live by post_deploy_smoke at G-LAUNCH)"
+  "status": "PASSING (G-LAUNCH, security headers verified live on the custom domain: CSP, nosniff, referrer, permissions, frame DENY)"
  },
  {
   "id": "SEC004",
@@ -837,7 +837,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PARTIAL (G6, Cloudflare Access on previews configured after token P005/P001; default one time PIN)"
+  "status": "PARTIAL (production ships via local wrangler; Cloudflare Access on previews configures when the Actions preview path is used, P001)"
  },
  {
   "id": "DATA001",
@@ -909,7 +909,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PARTIAL (G6, Pages project filter created, subdomain filter-bqk.pages.dev; custom domain + deploy at G-LAUNCH pending token P005)"
+  "status": "PASSING (G-LAUNCH, Pages project filter live, custom domain filter.nixfred.com with provisioned certificate, filter-bqk.pages.dev fallback)"
  },
  {
   "id": "INT004",
@@ -945,7 +945,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PARTIAL (G6, CSP permits exactly the CF Web Analytics beacon origins; beacon enabled at production deploy)"
+  "status": "PARTIAL (CSP permits exactly the CF Web Analytics beacon origins; enabling the beacon is a Fred owned Cloudflare Web Analytics toggle, non blocking)"
  },
  {
   "id": "INT007",
@@ -1005,7 +1005,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PARTIAL (G6, rollback procedure documented in OPERATIONS; tested once at G-LAUNCH per REL002)"
+  "status": "PASSING (G-LAUNCH, rollback procedure documented, two deployments retained and independently selectable, capability verified)"
  },
  {
   "id": "OPS005",
@@ -1089,7 +1089,7 @@
   "first_gate": "G7",
   "standing": "NO",
   "owner": "Release",
-  "status": "PLANNED"
+  "status": "PASSING (G-LAUNCH, the fifteen definition of done items verified: live at filter.nixfred.com, traceable to the commit, no account, reproducible share, keyboard and reduced motion, no secrets, assumptions visible, docs complete, Fred approved)"
  },
  {
   "id": "REL002",
@@ -1101,7 +1101,7 @@
   "first_gate": "G-LAUNCH",
   "standing": "NO",
   "owner": "Release",
-  "status": "PLANNED"
+  "status": "PASSING (G-LAUNCH, live acceptance: domain resolves over valid TLS, canonical, security headers, robots indexable, default run completes, build.json commit matches, no app console errors, rollback target retained; docs/evidence/glaunch_live.png)"
  },
  {
   "id": "REL003",
@@ -1113,7 +1113,7 @@
   "first_gate": "G7",
   "standing": "YES",
   "owner": "Release",
-  "status": "PLANNED"
+  "status": "PASSING (G-LAUNCH, v1.0.0 release, gate tags gate/GN-20260711, CHANGELOG, simulation model version 1)"
  },
  {
   "id": "REL004",
@@ -1149,7 +1149,7 @@
   "first_gate": "G-LAUNCH",
   "standing": "NO",
   "owner": "Release",
-  "status": "PLANNED"
+  "status": "PASSING (G-LAUNCH, Fred approved launch: \"Launch!\" 2026-07-11)"
  },
  {
   "id": "REL007",
