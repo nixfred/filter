@@ -40,9 +40,11 @@ export function ControlPanel({
   onAdvancedChange,
   onStart,
 }: Props) {
-  const [advancedOpen, setAdvancedOpen] = useState(false);
-  const [detailOpen, setDetailOpen] = useState<string | null>(null);
   const advancedCount = Object.values(advanced).filter((v) => v !== undefined).length;
+  // A preset that carries advanced overrides opens the advanced panel so the
+  // settings are visible and adjustable straight away (FR003, FR010).
+  const [advancedOpen, setAdvancedOpen] = useState(advancedCount > 0);
+  const [detailOpen, setDetailOpen] = useState<string | null>(null);
 
   return (
     <section className="control-rail" aria-label="Galaxy controls">
