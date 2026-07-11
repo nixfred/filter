@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { App } from '../../../src/app/App';
 import { StoresProvider } from '../../../src/app/providers';
 import { createSimulationStore, type WorkerLike } from '../../../src/state/simulation_store';
@@ -80,8 +80,11 @@ describe('configuration state', () => {
   it('RUN A PRESET opens the picker with all eight presets', () => {
     renderApp();
     fireEvent.click(screen.getByTestId('run-preset'));
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getAllByRole('listitem')).toHaveLength(8);
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toBeInTheDocument();
+    // Count the preset cards inside the dialog (the opening also has step
+    // list items, so scope to the picker).
+    expect(within(dialog).getAllByRole('listitem')).toHaveLength(8);
     fireEvent.click(screen.getByTestId('preset-silent-galaxy'));
     // Selection lands in configuration with the preset label shown.
     expect(screen.getByText('Preset: The Silent Galaxy')).toBeInTheDocument();

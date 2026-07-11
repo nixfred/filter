@@ -3,7 +3,29 @@
 // the Fermi paradox).
 export const COPY = {
   title: 'THE GREAT FILTER',
+  eyebrow: 'A NixFred LABS experiment',
   supportingLine: 'Build a galaxy. Seed the stars. See who survives long enough to be heard.',
+  explainer:
+    'An interactive journey through the Fermi paradox. Set the odds of life, intelligence, and survival, then run an entire galaxy forward across billions of years and watch what happens.',
+  explainerTwo:
+    'Civilizations flicker on. Most fade. A few transmit into the dark. Almost none are close enough, at the right moment, to ever hear a reply.',
+  steps: [
+    {
+      n: '01',
+      title: 'Set the odds',
+      body: 'Six controls for life, intelligence, technology, survival, communication, and expansion.',
+    },
+    {
+      n: '02',
+      title: 'Run a galaxy',
+      body: 'Ten billion years unfold. Points of light appear, spread, transmit, and go quiet.',
+    },
+    {
+      n: '03',
+      title: 'Read the silence',
+      body: 'A report tells you who spoke, who nearly met, and why the sky stayed silent.',
+    },
+  ],
   toneLine:
     'Most civilizations miss each other by a few million years. Cosmically speaking, terrible calendar management.',
   createGalaxy: 'CREATE A GALAXY',

@@ -30,6 +30,7 @@ export default defineConfig({
         'src/renderer/galaxy_layer.ts',
         'src/renderer/renderer.ts',
         'src/components/GalaxyViewport/GalaxyViewport.tsx',
+        'src/components/HeroGalaxy/HeroGalaxy.tsx',
         // React composition shells whose behavior is asserted end to end.
         'src/app/providers.tsx',
         'src/app/ErrorBoundary.tsx',
