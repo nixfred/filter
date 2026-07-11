@@ -61,9 +61,13 @@ export default defineConfig({
       testMatch: /(onboarding|accessibility_ui)\.spec\.ts/,
     },
     {
+      // Mobile Chromium emulation runs the layout and interaction specs. The
+      // full simulation completion specs run on the desktop projects, where
+      // the same engine behavior is verified without the mobile emulation
+      // compute penalty on a constrained CI runner.
       name: 'mobile-chrome',
       use: { ...devices['Pixel 5'], baseURL: 'http://localhost:4517' },
-      testIgnore: /production_smoke\.spec\.ts/,
+      testMatch: /(onboarding|accessibility_ui|mobile)\.spec\.ts/,
     },
     ...smokeProject,
   ],
