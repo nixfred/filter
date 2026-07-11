@@ -399,7 +399,10 @@ export function App() {
             }}
             onStart={() => startRun(controls)}
           />
-          <div className="config-canvas" aria-hidden="true" />
+          <div className="config-canvas" aria-hidden="true">
+            <HeroGalaxy reducedMotion={reducedMotion} />
+            <p className="config-canvas-hint">Your galaxy, waiting to run.</p>
+          </div>
         </main>
       ) : null}
 
