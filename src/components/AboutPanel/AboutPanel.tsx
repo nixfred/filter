@@ -11,11 +11,23 @@ interface BuildInfo {
 
 interface Props {
   build: BuildInfo | null;
+  reducedMotion: boolean;
+  lowPowerMode: boolean;
+  onToggleReducedMotion(): void;
+  onToggleLowPower(): void;
   onClearData(): void;
   onClose(): void;
 }
 
-export function AboutPanel({ build, onClearData, onClose }: Props) {
+export function AboutPanel({
+  build,
+  reducedMotion,
+  lowPowerMode,
+  onToggleReducedMotion,
+  onToggleLowPower,
+  onClearData,
+  onClose,
+}: Props) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     headingRef.current?.focus();
@@ -54,6 +66,26 @@ export function AboutPanel({ build, onClearData, onClose }: Props) {
           <dd data-testid="about-commit">{build?.commit?.slice(0, 12) ?? 'local'}</dd>
         </div>
       </dl>
+      <div className="about-toggles">
+        <label className="toggle-row">
+          <input
+            type="checkbox"
+            data-testid="toggle-reduced-motion"
+            checked={reducedMotion}
+            onChange={onToggleReducedMotion}
+          />
+          Reduced motion. Replace animation with discrete state changes.
+        </label>
+        <label className="toggle-row">
+          <input
+            type="checkbox"
+            data-testid="toggle-low-power"
+            checked={lowPowerMode}
+            onChange={onToggleLowPower}
+          />
+          Low power mode. Fewer visual stars and effects. The model is identical.
+        </label>
+      </div>
       <p className="about-line">
         Your preferences and last scenario live only in this browser. Clearing them removes both and
         returns to the opening state.

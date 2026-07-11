@@ -7,6 +7,7 @@ import { Engine } from './simulation/engine';
 import { computeMetrics } from './simulation/metrics';
 import { computeDigest } from './simulation/serialization';
 import { validateScenario } from './simulation/schema';
+import './styles/fonts.css';
 import './styles/reset.css';
 import './styles/tokens.css';
 import './styles/global.css';

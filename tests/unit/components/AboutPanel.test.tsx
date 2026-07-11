@@ -9,6 +9,10 @@ describe('AboutPanel', () => {
     render(
       <AboutPanel
         build={{ appVersion: '1.2.3', commit: 'abcdef1234567890' }}
+        reducedMotion={false}
+        lowPowerMode={false}
+        onToggleReducedMotion={() => {}}
+        onToggleLowPower={() => {}}
         onClearData={() => {}}
         onClose={() => {}}
       />,
@@ -21,14 +25,34 @@ describe('AboutPanel', () => {
   });
 
   it('falls back to local markers with no build metadata', () => {
-    render(<AboutPanel build={null} onClearData={() => {}} onClose={() => {}} />);
+    render(
+      <AboutPanel
+        build={null}
+        reducedMotion={false}
+        lowPowerMode={false}
+        onToggleReducedMotion={() => {}}
+        onToggleLowPower={() => {}}
+        onClearData={() => {}}
+        onClose={() => {}}
+      />,
+    );
     expect(screen.getByTestId('about-app-version')).toHaveTextContent('development');
     expect(screen.getByTestId('about-commit')).toHaveTextContent('local');
   });
 
   it('wires the clear local data control (FR013)', () => {
     const onClearData = vi.fn();
-    render(<AboutPanel build={null} onClearData={onClearData} onClose={() => {}} />);
+    render(
+      <AboutPanel
+        build={null}
+        reducedMotion={false}
+        lowPowerMode={false}
+        onToggleReducedMotion={() => {}}
+        onToggleLowPower={() => {}}
+        onClearData={onClearData}
+        onClose={() => {}}
+      />,
+    );
     screen.getByTestId('clear-data').click();
     expect(onClearData).toHaveBeenCalledOnce();
   });

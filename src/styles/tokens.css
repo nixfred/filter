@@ -36,9 +36,18 @@
   --type-xl: 1.953rem;
   --type-display: 2.441rem;
 
-  /* 2.1 Typefaces: self hosted woff2 files land at G5 (SEC007, NFR003).
-     Stacks name the target faces first so they activate when the files ship. */
-  --font-interface: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  /* 2.1 Typefaces, self hosted via src/styles/fonts.css (SEC007, NFR003).
+     System fonts remain as the swap fallback. */
+  --font-interface: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
   --font-data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Motion language (UX002, docs/ART_DIRECTION.md section 5): slow, long
+     fades. Durations and easing per event class. */
+  --motion-birth: 900ms;
+  --motion-detect: 1400ms;
+  --motion-extinct: 2600ms;
+  --motion-ui: 180ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }

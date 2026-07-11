@@ -543,3 +543,71 @@ body {
   border-radius: 4px;
   max-width: 90%;
 }
+
+/* G5: motion language on interface surfaces and preference toggles. */
+.button-primary,
+.button-outline,
+.preset-card,
+.status-actions button,
+.transport button {
+  transition:
+    background var(--motion-ui) var(--ease-out),
+    border-color var(--motion-ui) var(--ease-out),
+    color var(--motion-ui) var(--ease-out);
+}
+
+.drawer {
+  animation: drawer-in var(--motion-detect) var(--ease-out);
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.about-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.toggle-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: var(--type-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.toggle-row input {
+  margin-top: 0.2rem;
+  accent-color: var(--color-tech-gold);
+  min-width: 18px;
+  min-height: 18px;
+}
+
+.keymap dt {
+  color: var(--color-text-primary);
+}
+
+.keymap dd {
+  font-family: var(--font-data);
+  color: var(--color-tech-gold);
+}
+
+.keyboard-help h3 {
+  font-size: var(--type-sm);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.5rem;
+}

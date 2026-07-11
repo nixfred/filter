@@ -453,7 +453,7 @@
   "first_gate": "G5",
   "standing": "NO",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G5, self-hosted Inter/Fraunces/IBM Plex Mono, Observatory Elegy render, docs/evidence/g5_galaxy_render.png)"
  },
  {
   "id": "UX002",
@@ -465,7 +465,7 @@
   "first_gate": "G5",
   "standing": "NO",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G5, motion tokens durations/easing, signal shells as halos, extinction fade; reduced motion suppresses)"
  },
  {
   "id": "UX003",
@@ -501,7 +501,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G5, exact palette tokens, red reserved for extinction only, color_system.test)"
  },
  {
   "id": "UX006",
@@ -513,7 +513,7 @@
   "first_gate": "G5",
   "standing": "NO",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G5, round star sprites, no space photos, no neon, precise typography, docs/evidence/g5_galaxy_render.png)"
  },
  {
   "id": "UX007",
@@ -525,7 +525,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G5, canvas dominant in every layout, verified in render screenshots)"
  },
  {
   "id": "NFR001",
@@ -537,7 +537,7 @@
   "first_gate": "G5",
   "standing": "NO",
   "owner": "Performance",
-  "status": "PLANNED"
+  "status": "MANUAL PROTOCOL (G5, docs/evidence/g5_framerate.md with R024 targets; adaptive tiers in capability.ts; executes on the reference device before G-LAUNCH)"
  },
  {
   "id": "NFR002",
@@ -549,7 +549,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Performance",
-  "status": "PLANNED"
+  "status": "PASSING (G5, capability tiers, low power toggle reduces stars/effects; render_model.test + accessibility_ui.spec)"
  },
  {
   "id": "NFR003",
@@ -657,7 +657,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Accessibility",
-  "status": "PLANNED"
+  "status": "PASSING (G5, keyboard.spec full path + accessibility_ui.spec help sheet; canonical map in ACCESSIBILITY.md)"
  },
  {
   "id": "ACC002",
@@ -669,7 +669,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Accessibility",
-  "status": "PLANNED"
+  "status": "PASSING (G5, announcer rate cap unit test + live region e2e; manual protocol docs/evidence/g5_manual_a11y.md)"
  },
  {
   "id": "ACC003",
@@ -681,7 +681,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Accessibility",
-  "status": "PLANNED"
+  "status": "PASSING (G5, reduced_motion.spec + OS query honored + in-app toggle; accessibility_ui.spec)"
  },
  {
   "id": "ACC004",
@@ -693,7 +693,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Accessibility",
-  "status": "PLANNED"
+  "status": "PASSING (G5, axe contrast clean in accessibility_tests across 5 projects; palette WCAG AA per ART_DIRECTION)"
  },
  {
   "id": "ACC005",
@@ -717,7 +717,7 @@
   "first_gate": "G5",
   "standing": "YES",
   "owner": "Accessibility",
-  "status": "PLANNED"
+  "status": "PASSING (G5, dialogs/drawers manage focus and Escape; axe landmark checks clean)"
  },
  {
   "id": "SEC001",

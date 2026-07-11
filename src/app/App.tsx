@@ -37,6 +37,9 @@ const EducationDrawer = lazy(() =>
 const AboutPanel = lazy(() =>
   import('../components/AboutPanel/AboutPanel').then((m) => ({ default: m.AboutPanel })),
 );
+const KeyboardHelp = lazy(() =>
+  import('../components/KeyboardHelp/KeyboardHelp').then((m) => ({ default: m.KeyboardHelp })),
+);
 
 interface BuildInfo {
   appVersion: string;
@@ -88,6 +91,7 @@ export function App() {
   const [shareOpen, setShareOpen] = useState(false);
   const [educationOpen, setEducationOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [reportDismissed, setReportDismissed] = useState(false);
   const [announcement, setAnnouncement] = useState('');
   const [build, setBuild] = useState<BuildInfo | null>(null);
@@ -197,9 +201,17 @@ export function App() {
       ) {
         return;
       }
+      // The keyboard help is reachable from every screen (ACCESSIBILITY 1.1).
+      if (event.key === '?') {
+        setHelpOpen(true);
+        return;
+      }
       if (screen !== 'sim') {
         if (event.key === 'p' || event.key === 'P') setPresetsOpen(true);
-        if (event.key === 'Escape') setPresetsOpen(false);
+        if (event.key === 'Escape') {
+          setPresetsOpen(false);
+          setHelpOpen(false);
+        }
         return;
       }
       switch (event.key) {
@@ -251,6 +263,13 @@ export function App() {
     globalThis.addEventListener('keydown', onKey);
     return () => globalThis.removeEventListener('keydown', onKey);
   });
+
+  // Honor the OS reduced motion setting even when the explicit preference is
+  // off (ACC003): either source enables reduced motion.
+  const osReducedMotion =
+    typeof globalThis.matchMedia === 'function' &&
+    globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = preferences.reducedMotion || osReducedMotion;
 
   const effective = sim.scenario ? resolveEffectiveParameters(sim.scenario) : null;
   const shareUrl = sim.scenario
@@ -327,7 +346,7 @@ export function App() {
               displayYear: sim.displayYear,
               expansionSpeedFractionC: effective?.expansionEffectiveSpeedFractionC ?? 0.03,
             }}
-            reducedMotion={preferences.reducedMotion}
+            reducedMotion={reducedMotion}
             lowPowerMode={preferences.lowPowerMode}
           />
           <SimulationControls
@@ -389,10 +408,17 @@ export function App() {
         {aboutOpen ? (
           <AboutPanel
             build={build}
+            reducedMotion={preferences.reducedMotion}
+            lowPowerMode={preferences.lowPowerMode}
+            onToggleReducedMotion={() =>
+              ui.setPreference('reducedMotion', !preferences.reducedMotion)
+            }
+            onToggleLowPower={() => ui.setPreference('lowPowerMode', !preferences.lowPowerMode)}
             onClearData={clearLocalData}
             onClose={() => setAboutOpen(false)}
           />
         ) : null}
+        {helpOpen ? <KeyboardHelp onClose={() => setHelpOpen(false)} /> : null}
       </Suspense>
 
       <footer className="app-footer">

@@ -10,7 +10,29 @@ import type { RendererAdapter } from './renderer';
 import type { RenderModel } from './render_model';
 import { RENDER_COLORS, stateColor } from './color_system';
 
+// A soft round sprite so points read as stars, not squares (UX006 precise
+// typography and restraint). Built once from a radial gradient.
+function roundSprite(): THREE.Texture {
+  const size = 64;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(0.5, 'rgba(255,255,255,0.85)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, size, size);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
 export function createThreeRenderer(capability: RenderCapability): RendererAdapter {
+  const sprite = roundSprite();
   let renderer: THREE.WebGLRenderer | null = null;
   let scene: THREE.Scene | null = null;
   let camera3: THREE.OrthographicCamera | null = null;
@@ -46,12 +68,18 @@ export function createThreeRenderer(capability: RenderCapability): RendererAdapt
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    // Pixel sized points (sizeAttenuation off) render as small crisp stars at
+    // every zoom, instead of world unit sprites that hit the GPU point size
+    // cap and appear as large squares.
     const material = new THREE.PointsMaterial({
-      size: 90,
+      size: 2.4,
+      sizeAttenuation: false,
       vertexColors: true,
       transparent: true,
       opacity: 0.7,
       depthWrite: false,
+      map: sprite,
+      alphaTest: 0.2,
     });
     return new THREE.Points(geometry, material);
   }
@@ -118,7 +146,15 @@ export function createThreeRenderer(capability: RenderCapability): RendererAdapt
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         civPoints = new THREE.Points(
           geometry,
-          new THREE.PointsMaterial({ size: 700, vertexColors: true, depthWrite: false }),
+          new THREE.PointsMaterial({
+            size: 7,
+            sizeAttenuation: false,
+            vertexColors: true,
+            transparent: true,
+            depthWrite: false,
+            map: sprite,
+            alphaTest: 0.2,
+          }),
         );
         scene.add(civPoints);
       }
@@ -178,6 +214,7 @@ export function createThreeRenderer(capability: RenderCapability): RendererAdapt
       renderer?.setSize(w, h);
     },
     unmount() {
+      sprite.dispose();
       renderer?.dispose();
       renderer?.domElement.remove();
       renderer = null;
