@@ -13,6 +13,7 @@ import { ShareDialog } from '../components/ShareDialog/ShareDialog';
 import { SilenceReport } from '../components/SilenceReport/SilenceReport';
 import { SimulationControls } from '../components/SimulationControls/SimulationControls';
 import { StatusBar } from '../components/StatusBar/StatusBar';
+import { ContactFlash } from '../components/ContactFlash/ContactFlash';
 import { usePreferences, useSimulation, useStores } from './providers';
 import {
   createScenario,
@@ -123,6 +124,37 @@ export function App() {
       ui.saveLastScenario(encodeScenario(sim.scenario), sim.displayYear);
     }
   }, [sim.scenario, sim.phase, sim.displayYear, ui]);
+
+  // Start over: return all the way to the opening screen, discarding the run
+  // and its configuration (distinct from Reset, which keeps the parameters).
+  function startOver() {
+    simulation.reset();
+    setControls({ ...DEFAULT_CONTROLS });
+    setPresetName(null);
+    setPendingSeed(null);
+    setReportDismissed(false);
+    setLedgerOpen(false);
+    setShareOpen(false);
+    setScreen('opening');
+    announcer.immediate('Started over.');
+  }
+
+  // Count of confirmed contacts revealed so far, for the celebration and the
+  // live region (BR004). Contact is the rarest, most consequential event.
+  const revealedContacts = sim.revealedEvents.reduce(
+    (count, event) => (event.type === 'ContactEvent' ? count + 1 : count),
+    0,
+  );
+  const lastAnnouncedContacts = useRef(0);
+  useEffect(() => {
+    if (revealedContacts > lastAnnouncedContacts.current) {
+      lastAnnouncedContacts.current = revealedContacts;
+      announcer.immediate('Contact. Two civilizations found each other.');
+    }
+    if (revealedContacts < lastAnnouncedContacts.current) {
+      lastAnnouncedContacts.current = revealedContacts;
+    }
+  }, [revealedContacts, announcer]);
 
   function clearLocalData() {
     ui.clearLocalData();
@@ -340,7 +372,9 @@ export function App() {
             onToggleLabels={() => ui.setPreference('labelsVisible', !preferences.labelsVisible)}
             onShare={() => setShareOpen(true)}
             onViewReport={() => setReportDismissed(false)}
+            onStartOver={startOver}
           />
+          <ContactFlash contactCount={revealedContacts} reducedMotion={reducedMotion} />
           <GalaxyViewport
             feed={{
               systems: sim.systems,
