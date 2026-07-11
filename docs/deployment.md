@@ -141,3 +141,10 @@ No production deployment recorded yet. Provisioning of the repository, Pages pro
 ## 9. Rollback
 
 The rollback procedure lives in `docs/OPERATIONS.md` section 3: identify the previous successful Pages deployment, restore it through the Cloudflare Pages rollback API without rebuilding, run the post deploy smoke test, open an incident issue, and follow with a corrective pull request, never rewriting `main` (OPS004, packet 03 section 19). The procedure is rehearsed at least once before public launch (REL002, packet 03 section 21 item 17).
+
+## G0 completion record (2026-07-11)
+
+Repository created and pushed: https://github.com/nixfred/filter (public, MIT, default branch main).
+Initial planning release: https://github.com/nixfred/filter/releases/tag/v0.1.0-planning
+Security readback evidence: docs/evidence/planning/g0_repo_settings.txt (secret scanning enabled, push protection enabled, Dependabot vulnerability alerts enabled).
+Safety scan evidence: docs/evidence/planning/g0_safety_scan.txt.
