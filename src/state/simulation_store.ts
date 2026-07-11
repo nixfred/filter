@@ -37,6 +37,8 @@ export interface SimulationStoreState {
   headline: string | null;
   errorMessage: string | null;
   civilizationCount: number;
+  /** Static system positions from the worker snapshot, for the renderer. */
+  systems: { id: number; xLy: number; yLy: number }[] | null;
 }
 
 type Listener = () => void;
@@ -52,6 +54,7 @@ const initialState: SimulationStoreState = {
   headline: null,
   errorMessage: null,
   civilizationCount: 0,
+  systems: null,
 };
 
 export interface WorkerLike {
@@ -95,7 +98,7 @@ export function createSimulationStore(createWorker: () => WorkerLike) {
   function handleWorkerMessage(message: WorkerOutMessage) {
     switch (message.type) {
       case 'SNAPSHOT':
-        set({ civilizationCount: message.civilizationCount });
+        set({ civilizationCount: message.civilizationCount, systems: message.systems });
         break;
       case 'EVENT_BATCH':
         pendingEvents = pendingEvents.concat(message.events);

@@ -21,6 +21,7 @@ export function createThreeRenderer(capability: RenderCapability): RendererAdapt
   let motion: 'full' | 'reduced' = capability.motion;
   let width = 800;
   let height = 600;
+  let civRevisionRendered = -1;
 
   function buildStarfield(): THREE.Points {
     const count = capability.tier === 'high' ? 18_000 : 4_000;
@@ -88,16 +89,17 @@ export function createThreeRenderer(capability: RenderCapability): RendererAdapt
       camera3.lookAt(cameraState.centerXLy, 0, cameraState.centerYLy);
       camera3.updateProjectionMatrix();
 
-      // Civilization points rebuilt per frame from the model (bounded by the
-      // representative population, NFR007 keeps this a typed array).
-      if (civPoints) {
-        scene.remove(civPoints);
-        civPoints.geometry.dispose();
-        (civPoints.material as THREE.Material).dispose();
-        civPoints = null;
-      }
+      // Civilization points rebuilt only when the civilization set or a state
+      // changed (model.civRevision), not every frame. NFR006, NFR007.
       const civs = [...model.civilizations.values()];
-      if (civs.length > 0) {
+      if (model.civRevision !== civRevisionRendered && civs.length > 0) {
+        civRevisionRendered = model.civRevision;
+        if (civPoints) {
+          scene.remove(civPoints);
+          civPoints.geometry.dispose();
+          (civPoints.material as THREE.Material).dispose();
+          civPoints = null;
+        }
         const positions = new Float32Array(civs.length * 3);
         const colors = new Float32Array(civs.length * 3);
         civs.forEach((civ, i) => {

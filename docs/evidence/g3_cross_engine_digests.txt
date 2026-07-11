@@ -1,0 +1,20 @@
+
+Running 15 tests using 3 workers
+
+  ✓   2 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (123ms)
+  ✓   4 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (101ms)
+  ✓   5 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (104ms)
+  ✓   6 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (103ms)
+  ✓   1 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (433ms)
+  ✓   7 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (105ms)
+  ✓   8 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (231ms)
+  ✓   9 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (223ms)
+  ✓   3 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (783ms)
+  ✓  10 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (225ms)
+  ✓  11 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (213ms)
+  ✓  12 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (231ms)
+  ✓  13 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (233ms)
+  ✓  14 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (197ms)
+  ✓  15 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (187ms)
+
+  15 passed (2.8s)

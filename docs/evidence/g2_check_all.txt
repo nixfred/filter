@@ -21,7 +21,7 @@ All matched files use Prettier code style!
 > vitest run tests/unit/simulation
 
 
- RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
+ RUN  v4.1.10 .
 
 
  Test Files  15 passed (15)
@@ -34,7 +34,7 @@ All matched files use Prettier code style!
 > vitest run --coverage
 
 
- RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
+ RUN  v4.1.10 .
       Coverage enabled with v8
 
 
@@ -71,7 +71,8 @@ Lines        : 96.41% ( 754/782 )
 > vite build && node scripts/write_build_metadata.mjs
 
 vite v8.1.4 building client environment for production...
-[2Ktransforming...✓ 19 modules transformed.
+[2K
+transforming...✓ 19 modules transformed.
 rendering chunks...
 computing gzip size...
 dist/index.html                   0.68 kB │ gzip:  0.41 kB

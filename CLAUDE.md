@@ -29,6 +29,10 @@ React, TypeScript, Vite. Three.js 2.5D renderer with a non WebGL fallback (F002)
 3. Copy voice per UX003 and docs/ART_DIRECTION.md: calm, precise, occasionally dry. No modeling assumption presented as fact (BR003).
 4. Commit messages use WHAT, WHY, VERIFIED, EVIDENCE, TAGS. A VERIFIED claim appears only when the exact command succeeded and gated the commit.
 
+## Evidence hygiene
+
+Test tool output (vitest, Playwright) prints absolute local paths that must never enter the public repository (BUILD.md 12.2). When capturing a `check:all` or test run into `docs/evidence/`, strip the local path prefix first, for example pipe through `sed 's#/Users/[^/]*/Projects/filter.nixfred.com/#./#g'` or the equivalent. Scan every evidence file for a home directory path before committing.
+
 ## Test and evidence expectations
 
 1. check:all must pass before any commit that claims verification.

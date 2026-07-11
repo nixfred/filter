@@ -36,6 +36,9 @@ export class RenderModel {
   readonly frontiers = new Map<number, RenderFrontier>();
   /** Effective sub light expansion speed, from the scenario (FR021). */
   expansionSpeedFractionC = 0.03;
+  /** Bumps whenever the civilization set or any state changes, so the
+   *  renderer only rebuilds its point geometry when it must. */
+  civRevision = 0;
 
   loadSystems(systems: RenderSystem[]): void {
     this.systems.clear();
@@ -53,6 +56,7 @@ export class RenderModel {
           systemId: event.hostSystemId,
           state: event.toState,
         });
+        this.civRevision += 1;
         break;
       case 'SignalEmissionStart':
         this.signals.set(event.signalId, {

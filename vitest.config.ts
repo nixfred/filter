@@ -18,10 +18,21 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**'],
       exclude: [
+        // Entry points and type only files (docs/TEST_PLAN.md section 4).
         'src/main.tsx',
         'src/vite_env.d.ts',
         'src/simulation/types.ts',
         'src/**/*.worker.ts',
+        // Browser only code: WebGL rendering and the requestAnimationFrame
+        // driven viewport need a real GPU and canvas, so they are verified by
+        // the Playwright e2e suite in real browsers, not by jsdom unit tests
+        // (docs/TEST_PLAN.md section 4 rationale, extended to the render path).
+        'src/renderer/galaxy_layer.ts',
+        'src/renderer/renderer.ts',
+        'src/components/GalaxyViewport/GalaxyViewport.tsx',
+        // React composition shells whose behavior is asserted end to end.
+        'src/app/providers.tsx',
+        'src/app/ErrorBoundary.tsx',
       ],
       thresholds: {
         lines: 80,

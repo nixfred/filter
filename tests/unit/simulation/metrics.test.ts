@@ -81,7 +81,7 @@ describe('generateHeadline branches (UX003, no dashes ever)', () => {
     it(`writes the ${name} headline`, () => {
       const headline = generateHeadline({ ...base, ...overrides });
       expect(headline).toContain(expected);
-      expect(headline).not.toMatch(/[–—]/);
+      expect(headline).not.toMatch(/[\u2013\u2014]/);
     });
   }
 

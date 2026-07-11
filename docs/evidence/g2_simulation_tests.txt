@@ -3,7 +3,7 @@
 > vitest run tests/unit/simulation
 
 
- RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
+ RUN  v4.1.10 .
 
 
  Test Files  15 passed (15)

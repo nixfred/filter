@@ -21,7 +21,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Product",
-  "status": "PLANNED"
+  "status": "PASSING (G3, onboarding.spec + default_run.spec: core path without an essay)"
  },
  {
   "id": "BR003",
@@ -45,7 +45,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, default_run.spec asserts a non empty headline first in the report)"
  },
  {
   "id": "BR005",
@@ -57,7 +57,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, no account or sign in anywhere in the flow)"
  },
  {
   "id": "FR001",
@@ -69,7 +69,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, App.test + onboarding.spec: six sliders in the config panel)"
  },
  {
   "id": "FR002",
@@ -81,7 +81,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, ControlPanel renders label, explanation, value, range, effect, detail toggle)"
  },
  {
   "id": "FR003",
@@ -93,7 +93,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, ControlPanel advanced disclosure collapsed by default)"
  },
  {
   "id": "FR004",
@@ -105,7 +105,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, default_run.spec: start, pause, resume, speed, reset, replay, randomize)"
  },
  {
   "id": "FR005",
@@ -117,7 +117,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, GalaxyViewport zoom/pan/keyboard camera; render_model.test camera arithmetic)"
  },
  {
   "id": "FR006",
@@ -129,7 +129,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, EventLedger.test + default_run.spec ledger fills)"
  },
  {
   "id": "FR007",
@@ -141,7 +141,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, StatusBar label toggle wired, L shortcut)"
  },
  {
   "id": "FR008",
@@ -153,7 +153,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, share_scenario.spec: two visits through one shared link reproduce identical run)"
  },
  {
   "id": "FR009",
@@ -165,7 +165,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, SilenceReport.test: headline plus fifteen formatted metrics)"
  },
  {
   "id": "FR010",
@@ -189,7 +189,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, onboarding.spec: opening state skippable, direct to simulation)"
  },
  {
   "id": "FR012",
@@ -249,7 +249,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PASSING (G2 scope: Node digests and intra engine property proven, docs/evidence/g2_simulation_tests.txt; cross engine browser assertion lands with the app harness at G3)"
+  "status": "PASSING (G3: cross engine digest equality proven in Chromium, Firefox, WebKit; Node determinism at G2)"
  },
  {
   "id": "FR018",
@@ -333,7 +333,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, six speed steps in SimulationControls, bracket shortcuts, pacing in store)"
  },
  {
   "id": "FR025",
@@ -381,7 +381,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, Three.js renderer plus fallback; render_model + fallback_renderer tests, e2e in real browsers)"
  },
  {
   "id": "FR029",
@@ -393,7 +393,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, reduced_motion.spec full run; fallback suppresses motion effects)"
  },
  {
   "id": "FR030",
@@ -417,7 +417,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, mobile.spec: core path at 390x844 with 40px touch targets)"
  },
  {
   "id": "FR032",
@@ -429,7 +429,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, desktop config and sim layouts, canvas dominant)"
  },
  {
   "id": "FR033",
@@ -597,7 +597,7 @@
   "first_gate": "G3",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G3, throttled dirty checked render loop; the 56s to 8s e2e drop is the evidence)"
  },
  {
   "id": "NFR007",

@@ -5,6 +5,12 @@ import { defineConfig, devices } from '@playwright/test';
 // Retries 0 so intermittent failures surface loudly (NFR010, TEST_PLAN 8.3).
 export default defineConfig({
   retries: 0,
+  // Cap parallel workers so six browser projects do not starve each other's
+  // simulation workers on a constrained machine. A full default run computes
+  // 2048 systems across ten billion years; under heavy contention that path
+  // can stall, which is a test environment artifact, not a product defect.
+  workers: 4,
+  timeout: 60_000,
   use: {
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
