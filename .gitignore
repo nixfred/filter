@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+!.dev.vars.example
+
+# Wrangler local state
+.wrangler/
+
+# Test and report artifacts
+playwright-report/
+test-results/
+.lighthouseci/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor state
+.idea/
+*.swp
