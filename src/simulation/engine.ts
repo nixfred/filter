@@ -259,7 +259,13 @@ export class Engine {
     }
 
     const eventId = this.log(
-      { type: 'StateTransition', civilizationId: civ.id, fromState, toState },
+      {
+        type: 'StateTransition',
+        civilizationId: civ.id,
+        fromState,
+        toState,
+        hostSystemId: systemId,
+      },
       atYear,
       null,
     );
@@ -303,7 +309,17 @@ export class Engine {
     };
     this.state.signals.push(signal);
     civ.detectableWindow = { startYear: atYear, endYear: signal.emissionEndYear };
-    this.log({ type: 'SignalEmissionStart', signalId: signal.id }, atYear, causeEventId);
+    this.log(
+      {
+        type: 'SignalEmissionStart',
+        signalId: signal.id,
+        systemId: civ.hostSystemId,
+        emissionEndYear: signal.emissionEndYear,
+        strength: signal.strength,
+      },
+      atYear,
+      causeEventId,
+    );
     this.schedule(signal.emissionEndYear, civ.hostSystemId, {
       kind: 'emission_end',
       signalId: signal.id,
@@ -410,6 +426,7 @@ export class Engine {
         civilizationId: civId,
         fromState: civ.stateHistory[civ.stateHistory.length - 2].state,
         toState: 'extinct',
+        hostSystemId: civ.hostSystemId,
       },
       atYear,
       null,
@@ -454,7 +471,13 @@ export class Engine {
     civ.stateHistory.push({ state: to, atYear });
     this.civGen[civId]++;
     this.log(
-      { type: 'StateTransition', civilizationId: civId, fromState, toState: to },
+      {
+        type: 'StateTransition',
+        civilizationId: civId,
+        fromState,
+        toState: to,
+        hostSystemId: civ.hostSystemId,
+      },
       atYear,
       null,
     );

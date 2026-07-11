@@ -29,6 +29,8 @@ export type WorkerOutMessage =
       civilizationCount: number;
       signalCount: number;
       frontierCount: number;
+      /** Static positions for the render layer, sent once per INIT. */
+      systems: { id: number; xLy: number; yLy: number }[];
     }
   | { type: 'EVENT_BATCH'; batchId: number; events: SimulationEvent[]; time: number }
   | { type: 'METRICS_UPDATE'; time: number; metrics: Partial<RunMetrics> }
@@ -56,6 +58,11 @@ export function createWorkerHost(post: (message: WorkerOutMessage) => void) {
       civilizationCount: engine.state.civilizations.length,
       signalCount: engine.state.signals.length,
       frontierCount: engine.state.frontiers.length,
+      systems: engine.state.systems.map((s) => ({
+        id: s.id,
+        xLy: s.position.xLy,
+        yLy: s.position.yLy,
+      })),
     });
   }
 

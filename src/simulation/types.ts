@@ -111,8 +111,22 @@ export interface ExpansionFrontier {
 
 /** Event log entries (docs/DATA_MODEL.md 2.5). */
 export type SimulationEvent = { id: number; atYear: number; causeEventId: number | null } & (
-  | { type: 'StateTransition'; civilizationId: number; fromState: CivState; toState: CivState }
-  | { type: 'SignalEmissionStart'; signalId: number }
+  | {
+      type: 'StateTransition';
+      civilizationId: number;
+      fromState: CivState;
+      toState: CivState;
+      /** Render binding only, never hashed into the digest. */
+      hostSystemId: number;
+    }
+  | {
+      type: 'SignalEmissionStart';
+      signalId: number;
+      /** Render fields only, never hashed into the digest. */
+      systemId: number;
+      emissionEndYear: number;
+      strength: number;
+    }
   | { type: 'SignalEmissionEnd'; signalId: number }
   | { type: 'DetectionEvent'; signalId: number; receivingCivilizationId: number }
   | {
