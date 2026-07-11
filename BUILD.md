@@ -3,12 +3,14 @@
 > Operating playbook for turning a requirements pack into a fully planned, gate enforced, `/goal` executable project. Read this file completely before editing requirements, creating project files, invoking agents, initializing external services, or writing application code.
 >
 > The NIXFRED GALAXY repository is the reference implementation. It is evidence, not authority. Project specific decisions recorded in the current repository always take precedence.
+>
+> Revision 3, 2026-07-11. Amended with lessons from the filter.nixfred.com build, per Fred's rulings: shared vocabulary pinning, history aware safety scans, an independent review fallback, charter by reference, a verification mode column, trimmed PRD fields, and a doc tree that scales to project size.
 
 ## 0. Mission and operating contract
 
 Fred will place one or more requirements files in a project directory and ask you to assess, improve, plan, or build the project. Your job is to transform those inputs into a deterministic execution system that another capable coding agent can resume and complete from repository state alone.
 
-Do not reduce the structure because a project appears small. Reduce the number of agents, documents, or implementation phases only when the same controls remain intact.
+Do not weaken the controls because a project appears small. Reduce the number of agents, documents, or implementation phases through the scaling rule in Section 2, and only when the same controls remain intact.
 
 The required planning state is:
 
@@ -94,6 +96,10 @@ Use this structure unless the project already has a compatible structure:
 ```
 
 Create only documents that apply, but never omit the seven required planning files listed in Section 0.
+
+Scaling rule (Fred ruling, 2026-07-11): the seven required planning files are mandatory at every project size. Below roughly 40 active requirements, discipline documents may merge to reduce sprawl while keeping every duty covered: `SECURITY.md` duties may fold into `SECURITY_PLAN.md`, `DATA_MODEL.md` into `ARCHITECTURE.md`, `OPERATIONS.md` into `CI_CD.md`. Record any merge as a ruling in `docs/DECISIONS.md` so gates and charters reference the surviving file.
+
+Process provenance artifacts (the intake report, specialist charters, adversarial review records, and a build narrative if one is written) live under `docs/evidence/planning/`, not in top level `docs/`. `HOW_THIS_WAS_BUILT.md` is optional. `DESIGN_BIBLE.md` exists only when Phase D runs.
 
 ## 3. Phase A: Repository safety and intake
 
@@ -286,7 +292,7 @@ Every specialist charter must include:
 
 1. Mission and exact deliverables
 2. Exact absolute output paths
-3. Canonical rulings copied verbatim
+3. Canonical rulings, binding on the specialist
 4. Stable requirement IDs
 5. Authority hierarchy
 6. Public repository safety rule
@@ -296,6 +302,8 @@ Every specialist charter must include:
 10. Required cross document references
 11. Required final report format
 12. Instruction not to modify files outside assigned scope
+
+Charter by reference (proven on the filter build): when specialists share a filesystem, write one common charter file the whole fan out must read first, and have specialists read canonical rulings directly from `docs/DECISIONS.md` instead of duplicating them into every charter. The no drift intent is preserved because every agent reads the same canonical text. Per agent prompts then carry only mission, deliverables, and discipline specific guidance.
 
 Required report format:
 
@@ -312,10 +320,10 @@ VALIDATION PERFORMED
 ### 5.3 Parallel work rules
 
 1. Parallel agents may propose, but they do not settle cross discipline conflicts.
-2. Shared numbering systems must be assigned before fan out.
+2. Shared numbering systems AND shared vocabulary must be assigned before fan out: requirement IDs, CI job names, npm script names, test tree paths, and evidence naming. Any name two documents must share by Section 8.3 gets pinned in the common charter first, or parallel specialists will invent divergent names and gate reconciliation will fail.
 3. Every reported change must be verified on disk.
 4. Check modification times before concluding that a running agent ignored an update.
-5. Send new owner rulings to active agents immediately.
+5. Send new owner rulings to active agents immediately. Relay only facts that already exist on disk; if you must reference a name or file another agent has not yet finalized, mark it provisional and send a correction once the real name lands.
 6. Recheck affected files after agents finish.
 7. Never accept a specialist report as evidence that the file is correct.
 
@@ -403,12 +411,12 @@ Every active requirement entry must contain:
 4. Reason or business value
 5. Source or ruling
 6. Acceptance criteria
-7. Priority
-8. Dependencies
-9. Risks
-10. Gate class
-11. First required phase
-12. Status
+7. Dependencies
+8. Gate class
+9. First required phase
+10. Status
+
+Priority and per requirement Risks fields were removed as mandatory by Fred's ruling of 2026-07-11: priority restates gate class, and requirement level risk blurbs duplicate `docs/RISKS.md` as filler. Either may still appear on an entry where it genuinely adds information.
 
 Recommended status values:
 
@@ -435,19 +443,23 @@ Create one row for every active requirement and every binding rubric check.
 | Acceptance condition | Exact observable pass condition |
 | Mechanism | Test file, script, CI job, query, manual protocol, or browser path |
 | Evidence | Artifact proving the result |
-| Class | `BLOCK`, `WARN`, or `MANUAL` |
+| Class | `BLOCK` or `WARN`: the consequence of failure |
+| Mode | `AUTO` or `MANUAL`: how the mechanism is exercised |
 | First gate | Earliest gate where it must pass |
 | Standing enforcement | Whether it continues after launch |
 | Owner | Discipline responsible |
 | Status | Current state |
 
-### 8.2 Gate class definitions
+### 8.2 Gate class and mode definitions
+
+Class states the consequence, mode states the method. They are orthogonal: a blocking check can be verified by a human, and an advisory check can be automated.
 
 1. `BLOCK`: Failure prevents gate passage, release, or launch.
 2. `WARN`: Failure is recorded and visible but does not stop the current gate.
-3. `MANUAL`: Human observation is required using a written protocol and retained evidence.
+3. `AUTO`: The mechanism is a test, script, or CI job that runs without human judgment.
+4. `MANUAL`: Human observation is required using a written protocol and retained evidence.
 
-Manual does not mean informal. A manual check needs steps, expected results, reviewer, date, and stored evidence.
+Manual does not mean informal. A manual check needs steps, expected results, reviewer, date, and stored evidence. Legacy matrices that used `MANUAL` as a class value (the filter build's GATES.md among them) are read as class `BLOCK` with mode `MANUAL`; do not renumber or rewrite them retroactively.
 
 ### 8.3 Gate quality rules
 
@@ -505,6 +517,8 @@ Every phase must include:
 9. Exit conditions
 10. Commit and tag convention
 
+State the cumulative count of blocking and manual gate rows that must be passing by each phase exit, consistent with every row's first gate. This gives a resuming `/goal` session a one line sanity check per phase.
+
 Gate passage is recorded through:
 
 1. A commit that identifies the gate
@@ -555,6 +569,8 @@ Required hunt list:
 14. Weak or subjective acceptance criteria
 15. False verification claims
 16. Launch paths that cannot be exercised from a clean environment
+
+Fallback when independence is impossible (proven necessary on the filter build when subagent spawning failed on a spend limit): the orchestrator may execute the full hunt list inline, with scripted verification wherever a check can be scripted. The review artifact must then record the independence limitation explicitly, and the review is flagged rerunnable by a fresh independent agent on Fred's order. Never fake independence and never hard stop the project solely because a separate reviewer cannot be spawned.
 
 The review verdict must be one of:
 
@@ -677,6 +693,8 @@ Before the first public push and every release, scan for:
 15. DNS zone exports
 
 Public facts Fred already publishes may remain when relevant. Everything else requires explicit justification.
+
+The scan covers the FULL git history, not only the working tree. Before the first public push, scan every commit (`git log -p | grep` for the sensitive patterns, or scan each commit's tree); a file sanitized in a later commit still leaks through history. This rule exists because the filter build shipped a local path inside its root commit while the working tree scan passed, and the history had to be rewritten. Intake artifacts destined for the public repository follow the public writing rules from their first line: describe local paths generically, never literally.
 
 ### 12.3 Commit discipline
 
