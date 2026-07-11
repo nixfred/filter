@@ -21,7 +21,7 @@ All matched files use Prettier code style!
 > vitest run tests/unit/simulation
 
 
- RUN  v4.1.10 .
+ RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
 
 
  Test Files  16 passed (16)
@@ -34,7 +34,7 @@ All matched files use Prettier code style!
 > vitest run --coverage
 
 
- RUN  v4.1.10 .
+ RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
       Coverage enabled with v8
 
 
