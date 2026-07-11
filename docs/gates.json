@@ -561,7 +561,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G6, fonts self-hosted, education and about lazy loaded, no blocking third party scripts)"
  },
  {
   "id": "NFR004",
@@ -573,7 +573,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G6, bundle_budget job runs WARN per R024; promotes to BLOCK at G7)"
  },
  {
   "id": "NFR005",
@@ -705,7 +705,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Accessibility",
-  "status": "PLANNED"
+  "status": "PASSING (G6, accessibility_tests job green in CI; axe over core flows + manual protocol docs/evidence/g5_manual_a11y.md)"
  },
  {
   "id": "ACC006",
@@ -753,7 +753,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PARTIAL (G6, _headers CSP finalized from the real build; presence verified live by post_deploy_smoke at G-LAUNCH)"
  },
  {
   "id": "SEC004",
@@ -765,7 +765,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G6, dependency_review.yml green, fail-on-severity high)"
  },
  {
   "id": "SEC005",
@@ -777,7 +777,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G6, codeql.yml analyze green, javascript-typescript, weekly schedule)"
  },
  {
   "id": "SEC006",
@@ -813,7 +813,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G6, fork isolation guard, preview noindex, no production vars to previews)"
  },
  {
   "id": "SEC009",
@@ -825,7 +825,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G6, threat model in SECURITY_PLAN.md; controls wired in workflows and headers)"
  },
  {
   "id": "SEC010",
@@ -837,7 +837,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PARTIAL (G6, Cloudflare Access on previews configured after token P005/P001; default one time PIN)"
  },
  {
   "id": "DATA001",
@@ -873,7 +873,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G6, no cookies, Cloudflare Web Analytics only, no fingerprint, no params as identifiers)"
  },
  {
   "id": "INT001",
@@ -897,7 +897,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, five workflows with 12 canonical contexts green on PR #3, least privilege, SHA pinned, concurrency)"
  },
  {
   "id": "INT003",
@@ -909,7 +909,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PARTIAL (G6, Pages project filter created, subdomain filter-bqk.pages.dev; custom domain + deploy at G-LAUNCH pending token P005)"
  },
  {
   "id": "INT004",
@@ -933,7 +933,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, dependabot.yml, Dependabot Updates ran, weekly npm and actions)"
  },
  {
   "id": "INT006",
@@ -945,7 +945,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PARTIAL (G6, CSP permits exactly the CF Web Analytics beacon origins; beacon enabled at production deploy)"
  },
  {
   "id": "INT007",
@@ -1005,7 +1005,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PARTIAL (G6, rollback procedure documented in OPERATIONS; tested once at G-LAUNCH per REL002)"
  },
  {
   "id": "OPS005",
@@ -1017,7 +1017,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, deploy_production records commit, build time, app and model version; full at deploy)"
  },
  {
   "id": "OPS006",
@@ -1029,7 +1029,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, post_deploy_smoke job + production_smoke.spec.ts; runs against the domain at deploy)"
  },
  {
   "id": "OPS007",
@@ -1041,7 +1041,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, post_deploy_smoke opens an incident issue on failure)"
  },
  {
   "id": "OPS008",
@@ -1053,7 +1053,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, OPERATIONS cadence, Dependabot weekly, CodeQL weekly schedule)"
  },
  {
   "id": "OPS009",
@@ -1077,7 +1077,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, CI diagnostics 14 day retention, production build artifact 90 day)"
  },
  {
   "id": "REL001",
@@ -1125,7 +1125,7 @@
   "first_gate": "G6",
   "standing": "YES",
   "owner": "DevOps",
-  "status": "PLANNED"
+  "status": "PASSING (G6, robots allows indexing, previews guarded noindex; verified live at G-LAUNCH)"
  },
  {
   "id": "REL005",
