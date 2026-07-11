@@ -25,3 +25,6 @@ Thumbs.db
 # Editor state
 .idea/
 *.swp
+
+# Claude Code harness state
+.claude/scheduled_tasks.lock

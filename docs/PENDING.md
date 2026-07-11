@@ -31,3 +31,13 @@ Safe fallback: none by design. This is a deliberate MANUAL blocking gate, the on
 Impact: production launch waits for explicit approval.
 Requirements affected: REL006.
 Status: open.
+
+## P004 Quality threshold confirmation
+
+Decision needed: confirm or adjust the R024 defaults once real measurements exist: calibrated bundle budget promotion values, Lighthouse floors, mobile frame rate targets, and the screen reader matrix.
+Owner: Fred, with proposals from the build.
+Deadline gate: G7 (release candidate validation).
+Safe fallback: the R024 defaults stand as written.
+Impact of fallback: gates enforce the proposed numbers, all of which were chosen conservatively.
+Requirements affected: NFR001, NFR004, NFR005, ACC002, ACC005.
+Status: open.

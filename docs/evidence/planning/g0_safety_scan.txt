@@ -1,0 +1,9 @@
+files scanned: 43
+HIT docs/OPERATIONS.md [env file content]: CLOUDFLARE_ACCOUNT_ID=<account_id_from_deployment_md>
+HIT docs/OPERATIONS.md [env file content]: CLOUDFLARE_ACCOUNT_ID=<account_id_from_deployment_md>
+HIT docs/deployment.md [env file content]: CLOUDFLARE_ACCOUNT_ID=b120e63874f8f8e9d75db4c1bf65a766
+HIT docs/deployment.md [env file content]: CLOUDFLARE_ACCOUNT_ID=b120e63874f8f8e9d75db4c1bf65a766
+total findings: 4
+scan of health, family, address terms:
+TERM recovery -> ['GOAL.md', 'docs/ACCESSIBILITY.md', 'docs/ARCHITECTURE.md', 'docs/CI_CD.md', 'docs/GATES.md', 'docs/RISKS.md', 'docs/SECURITY_PLAN.md', 'docs/TEST_PLAN.md', 'docs/gates.json', 'BUILD.md', 'FILTER_BUILD_PACKET/FILTER_BUILD_PACKET_COMBINED.md', 'FILTER_BUILD_PACKET/filter_build_packet/03_CICD_FUNCTIONAL_REQUIREMENTS.md', 'docs/PRD.md']
+scan complete

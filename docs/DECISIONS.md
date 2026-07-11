@@ -165,3 +165,17 @@ Date: 2026-07-11. Source: scope control, packet Q52 and Q53.
 Decision: v1 presents single runs with exact replay. Batch statistics across many seeds (contact frequency, uncertainty bands) are deferred, and copy must never present one run as representative.
 Reason: batch mode multiplies worker and reporting complexity, the honesty requirement is handled by copy and the assumptions page.
 Requirements affected: FR034 (deferred), UX003. Documents affected: PRD, simulation_model.
+
+### R023 Lighthouse gate classification
+Date: 2026-07-11. Source: risk review RK16, safe default per BUILD.md 13.14.
+Decision: Lighthouse accessibility, best practices, and SEO categories are blocking checks. The Lighthouse performance score is advisory (recorded, visible, never merge blocking). The real performance gates are the CI bundle budget (NFR004, blocking) and the written manual frame rate protocol on the mobile reference device (NFR001, manual with retained evidence).
+Reason: Lighthouse performance scores are environment sensitive in CI runners and a flaky required check would deadlock the automatic production deploy (R011, RK13). The blocking set must contain only deterministic checks.
+Requirements affected: NFR001, NFR004, NFR005, NFR010, INT002. Documents affected: CI_CD, TEST_PLAN, GATES, lighthouserc.
+Overrides: none.
+
+### R024 Quality threshold defaults
+Date: 2026-07-11. Source: quality engineering proposal, safe defaults per BUILD.md 13.14, pending Fred confirmation in P004.
+Decision: draft bundle ceilings (initial route JavaScript 300 KB gzip, largest chunk 180 KB gzip, largest static asset 512 KB) run as WARN until the first real production build is measured, then calibrated values promote to BLOCK no later than G7. Lighthouse category floors: accessibility 1.00, best practices 0.95, SEO 0.90 blocking per R023, performance 0.80 advisory. Mobile frame rate targets on the R021 reference class: 30 fps median, no sustained drop below 24 fps for 500 ms, input acknowledged within 100 ms, verified by the manual protocol. Screen reader manual matrix: VoiceOver with Safari and NVDA with Firefox.
+Reason: gates need concrete numbers now, but blocking merges on unmeasured numbers would violate the no fabrication law. WARN first, measure, calibrate, promote.
+Requirements affected: NFR001, NFR004, NFR005, ACC002, ACC005. Documents affected: TEST_PLAN, CI_CD, GATES, PENDING.
+Overrides: none.
