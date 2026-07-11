@@ -38,7 +38,11 @@ export type WorkerOutMessage =
   | { type: 'PROGRESS'; fractionComplete: number }
   | { type: 'ERROR'; code: string; message: string; recoverable: boolean };
 
-const EVENTS_PER_SLICE = 512;
+// A large slice keeps the worker-to-store transfer to a handful of messages
+// even for a full run, so playback does not stall on postMessage round trip
+// latency. Playback smoothness is unaffected because the store reveals events
+// by simulated year, not by batch size (src/state/simulation_store.ts).
+const EVENTS_PER_SLICE = 4096;
 const MAX_IN_FLIGHT = 2;
 
 export function createWorkerHost(post: (message: WorkerOutMessage) => void) {

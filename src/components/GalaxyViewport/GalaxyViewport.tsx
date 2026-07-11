@@ -7,7 +7,7 @@
 // in docs/ACCESSIBILITY.md 2.6. The static element heuristics in jsx-a11y
 // cannot see that, hence the file scoped exceptions below.
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CAMERA_DEFAULT, panCamera, zoomCamera, type CameraState } from '../../renderer/camera';
 import { detectWebgl, resolveCapability } from '../../renderer/capability';
 import { RenderModel } from '../../renderer/render_model';
@@ -31,6 +31,7 @@ interface Props {
 export function GalaxyViewport({ feed, reducedMotion, lowPowerMode }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const adapterRef = useRef<RendererAdapter | null>(null);
+  const [degradedNote, setDegradedNote] = useState<string | null>(null);
   const modelRef = useRef(new RenderModel());
   const cameraRef = useRef<CameraState>({ ...CAMERA_DEFAULT });
   const appliedCountRef = useRef(0);
@@ -49,6 +50,9 @@ export function GalaxyViewport({ feed, reducedMotion, lowPowerMode }: Props) {
     const adapter = createRenderer(capability);
     adapter.mount(container);
     adapterRef.current = adapter;
+    // Degraded state note (FR030): the fallback renderer is a reduced, still
+    // meaningful presentation, and the model is identical.
+    setDegradedNote(adapter.kind === 'fallback' ? COPY.degraded.degradedNote : null);
 
     // Throttled to about 30 frames per second, and skips rendering entirely
     // when nothing changed since the last frame (no new events, no camera
@@ -167,6 +171,11 @@ export function GalaxyViewport({ feed, reducedMotion, lowPowerMode }: Props) {
       }}
     >
       <span className="visually-hidden">{COPY.degraded.loading}</span>
+      {degradedNote ? (
+        <p className="degraded-note" data-testid="degraded-note">
+          {degradedNote}
+        </p>
+      ) : null}
     </div>
   );
 }

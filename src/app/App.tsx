@@ -2,7 +2,7 @@
 // configuration, simulation, outcome. Global keyboard map per
 // docs/ACCESSIBILITY.md 1.2 (the canonical source). Live region per its
 // section 3, throttled through utils/accessibility.
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { COPY } from '../content/copy';
 import { PRESETS, type Preset } from '../content/presets';
 import { ControlPanel } from '../components/ControlPanel/ControlPanel';
@@ -20,11 +20,28 @@ import {
   DEFAULT_CONTROLS,
 } from '../simulation/scenario';
 import { SIMULATION_MODEL_VERSION } from '../simulation/model_version';
+import { decodeScenario, encodeScenario } from '../simulation/serialization';
 import type { MainControls } from '../simulation/types';
 import { scenarioFromSearch } from '../state/url_state';
 import { createAnnouncer } from '../utils/accessibility';
 import { formatYears } from '../utils/format';
 import type { SpeedStep } from '../state/simulation_store';
+
+// Education and About content lazy load so they never weigh on the initial
+// bundle (NFR003).
+const EducationDrawer = lazy(() =>
+  import('../components/EducationDrawer/EducationDrawer').then((m) => ({
+    default: m.EducationDrawer,
+  })),
+);
+const AboutPanel = lazy(() =>
+  import('../components/AboutPanel/AboutPanel').then((m) => ({ default: m.AboutPanel })),
+);
+
+interface BuildInfo {
+  appVersion: string;
+  commit: string;
+}
 
 type AppScreen = 'opening' | 'config' | 'sim';
 
@@ -40,26 +57,79 @@ export function App() {
   const { simulation, ui } = useStores();
   const sim = useSimulation();
   const preferences = usePreferences();
-  // A shared link opens in a ready configuration state (packet Q70 default),
-  // resolved once as lazy initial state.
-  const sharedScenario = useMemo(() => scenarioFromSearch(globalThis.location?.search ?? ''), []);
-  const [screen, setScreen] = useState<AppScreen>(sharedScenario ? 'config' : 'opening');
+  // Startup precedence: a shared link opens in a ready configuration state
+  // (packet Q70), otherwise the last scenario restores from localStorage
+  // (FR014), otherwise defaults.
+  const startup = useMemo(() => {
+    const shared = scenarioFromSearch(globalThis.location?.search ?? '');
+    if (shared) return { scenario: shared, from: 'share' as const };
+    const last = ui.loadLastScenario();
+    if (last) {
+      const decoded = decodeScenario(last.encoded);
+      if (decoded) return { scenario: decoded, from: 'storage' as const };
+    }
+    return { scenario: null, from: 'defaults' as const };
+  }, [ui]);
+  const [screen, setScreen] = useState<AppScreen>(startup.scenario ? 'config' : 'opening');
   const [controls, setControls] = useState<MainControls>(() =>
-    sharedScenario ? { ...sharedScenario.controls } : { ...DEFAULT_CONTROLS },
+    startup.scenario ? { ...startup.scenario.controls } : { ...DEFAULT_CONTROLS },
   );
   // FR008: a shared link reproduces the identical run, so its seed pair is
-  // held and used by the next Start rather than drawing a fresh seed.
+  // held and used by the next Start rather than drawing a fresh seed. A
+  // restored scenario draws a fresh seed (a new visit, not the same run).
   const [pendingSeed, setPendingSeed] = useState<{ a: number; b: number } | null>(
-    sharedScenario ? { a: sharedScenario.seedA, b: sharedScenario.seedB } : null,
+    startup.from === 'share' && startup.scenario
+      ? { a: startup.scenario.seedA, b: startup.scenario.seedB }
+      : null,
   );
   const [presetName, setPresetName] = useState<string | null>(null);
   const [presetsOpen, setPresetsOpen] = useState(false);
   const [ledgerOpen, setLedgerOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [educationOpen, setEducationOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [reportDismissed, setReportDismissed] = useState(false);
   const [announcement, setAnnouncement] = useState('');
+  const [build, setBuild] = useState<BuildInfo | null>(null);
   const announcer = useMemo(() => createAnnouncer(setAnnouncement), []);
   const progressTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Deployment metadata for the About panel (OPS009). Absent in development.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/build.json')
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data.commit === 'string') {
+          setBuild({ appVersion: String(data.appVersion), commit: data.commit });
+        }
+      })
+      .catch(() => {
+        // No build metadata in development; the panel shows local markers.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Persist the last scenario for restoration on the next visit (FR014,
+  // DATA002) whenever a run begins or completes.
+  useEffect(() => {
+    if (sim.scenario && (sim.phase === 'running' || sim.phase === 'complete')) {
+      ui.saveLastScenario(encodeScenario(sim.scenario), sim.displayYear);
+    }
+  }, [sim.scenario, sim.phase, sim.displayYear, ui]);
+
+  function clearLocalData() {
+    ui.clearLocalData();
+    simulation.reset();
+    setControls({ ...DEFAULT_CONTROLS });
+    setPresetName(null);
+    setPendingSeed(null);
+    setAboutOpen(false);
+    setScreen('opening');
+    announcer.immediate('Local data cleared.');
+  }
 
   // Progress announcements at a fixed real time cadence (ACC002).
   useEffect(() => {
@@ -314,11 +384,37 @@ export function App() {
           onCopied={() => announcer.immediate('Scenario link copied.')}
         />
       ) : null}
+      <Suspense fallback={null}>
+        {educationOpen ? <EducationDrawer onClose={() => setEducationOpen(false)} /> : null}
+        {aboutOpen ? (
+          <AboutPanel
+            build={build}
+            onClearData={clearLocalData}
+            onClose={() => setAboutOpen(false)}
+          />
+        ) : null}
+      </Suspense>
 
       <footer className="app-footer">
         <span>{COPY.footer.credit}</span>
         <a href="https://nixfred.com">{COPY.footer.site}</a>
         <a href="https://github.com/nixfred/filter">{COPY.footer.repo}</a>
+        <button
+          type="button"
+          className="footer-link"
+          data-testid="open-education"
+          onClick={() => setEducationOpen(true)}
+        >
+          Field guide
+        </button>
+        <button
+          type="button"
+          className="footer-link"
+          data-testid="open-about"
+          onClick={() => setAboutOpen(true)}
+        >
+          About
+        </button>
         <span data-testid="model-version">model v{SIMULATION_MODEL_VERSION}</span>
       </footer>
     </div>

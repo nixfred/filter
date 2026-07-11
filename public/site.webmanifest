@@ -1,0 +1,14 @@
+{
+  "name": "The Great Filter",
+  "short_name": "Great Filter",
+  "description": "Build a galaxy, seed it with civilizations, and watch almost all of them disappear.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070b14",
+  "theme_color": "#070b14",
+  "icons": [
+    { "src": "/icon_192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon_512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/mask_icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

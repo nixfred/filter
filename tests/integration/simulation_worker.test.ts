@@ -88,7 +88,8 @@ describe('worker host protocol', () => {
         detectableCommunication: 0.95,
         interstellarExpansion: 0.9,
       },
-      { representativePopulationSize: 256, runHorizonYears: 10_000_000_000 },
+      // A large population guarantees far more than two slices of events.
+      { representativePopulationSize: 2048, runHorizonYears: 10_000_000_000 },
     );
     let batches = 0;
     let sawComplete = false;

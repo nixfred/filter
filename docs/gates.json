@@ -33,7 +33,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Product",
-  "status": "PLANNED"
+  "status": "PASSING (G4, education.test: no claim to solve, model framed as a model; assumptions section)"
  },
  {
   "id": "BR004",
@@ -177,7 +177,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, presets.test: eight presets each match their character across a committed seed batch, cross preset ordering holds)"
  },
  {
   "id": "FR011",
@@ -201,7 +201,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, EducationDrawer + education.test + features.spec: seven topics)"
  },
  {
   "id": "FR013",
@@ -213,7 +213,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, AboutPanel clear-data control, features.spec verifies removal, DATA002)"
  },
  {
   "id": "FR014",
@@ -225,7 +225,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, features.spec: last scenario restores on next visit)"
  },
  {
   "id": "FR016",
@@ -405,7 +405,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, ErrorBoundary, loading text, empty ledger, fallback degraded note, unsupported copy)"
  },
  {
   "id": "FR031",
@@ -477,7 +477,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G4, copy.ts + education.ts, no-dash tests across generated strings and content)"
  },
  {
   "id": "UX004",
@@ -489,7 +489,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, onboarding.spec opening state, App.test)"
  },
  {
   "id": "UX005",
@@ -861,7 +861,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, ui_store localStorage only, no cookies, clear control, ui_store.test + features.spec)"
  },
  {
   "id": "DATA003",
@@ -1065,7 +1065,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, AboutPanel + footer show app version, model version, deployed commit; AboutPanel.test)"
  },
  {
   "id": "OPS010",
@@ -1137,7 +1137,7 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Design",
-  "status": "PLANNED"
+  "status": "PASSING (G4, favicon, icon_192/512, apple_touch, mask, manifest, robots, humans, social_preview from original artwork; head metadata wired)"
  },
  {
   "id": "REL006",
@@ -1161,6 +1161,6 @@
   "first_gate": "G4",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G4, footer credits NixFred, links nixfred.com and repo, shows version; onboarding.spec)"
  }
 ]

@@ -493,3 +493,53 @@ body {
     transition: none !important;
   }
 }
+
+/* G4 additions: education, about, degraded note, footer links. */
+.footer-link {
+  background: none;
+  border: none;
+  color: var(--color-star-cyan-pale);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.education-sections section,
+.about-versions {
+  border-top: 1px solid var(--color-bg-overlay);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.education-toggle {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: var(--type-md);
+  cursor: pointer;
+  text-align: left;
+  padding: 0.25rem 0;
+  width: 100%;
+}
+
+.education-paragraph,
+.about-line {
+  font-size: var(--type-sm);
+  color: var(--color-text-secondary);
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.degraded-note {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  font-size: var(--type-xs);
+  color: var(--color-text-secondary);
+  background: rgba(12, 18, 32, 0.8);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  max-width: 90%;
+}

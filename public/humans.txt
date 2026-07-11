@@ -1,0 +1,12 @@
+/* THE GREAT FILTER */
+
+/* TEAM */
+  Creator: Fred Nix (NixFred)
+  Site: https://nixfred.com
+  Source: https://github.com/nixfred/filter
+
+/* BUILT WITH */
+  React, TypeScript, Vite, Three.js, Cloudflare Pages
+
+/* THANKS */
+  Enrico Fermi, for asking where everybody is.

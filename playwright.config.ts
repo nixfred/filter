@@ -8,8 +8,9 @@ export default defineConfig({
   // Cap parallel workers so six browser projects do not starve each other's
   // simulation workers on a constrained machine. A full default run computes
   // 2048 systems across ten billion years; under heavy contention that path
-  // can stall, which is a test environment artifact, not a product defect.
-  workers: 4,
+  // can stall, which is a test environment artifact, not a product defect. CI
+  // with isolated resources can raise this with the --workers flag.
+  workers: process.env.CI ? 2 : 3,
   timeout: 60_000,
   use: {
     trace: 'retain-on-failure',

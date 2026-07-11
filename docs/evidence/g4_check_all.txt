@@ -1,0 +1,255 @@
+
+> filter@0.1.0 check:all
+> npm run format:check && npm run lint && npm run typecheck && npm run test:simulation && npm run test:coverage && npm run build && npm run check:bundle && npm run test:e2e && npm run test:a11y
+
+
+> filter@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> filter@0.1.0 lint
+> eslint .
+
+
+> filter@0.1.0 typecheck
+> tsc -b
+
+
+> filter@0.1.0 test:simulation
+> vitest run tests/unit/simulation
+
+
+ RUN  v4.1.10 .
+
+
+ Test Files  16 passed (16)
+      Tests  86 passed (86)
+   Start at  12:42:42
+   Duration  925ms (transform 388ms, setup 595ms, import 706ms, tests 241ms, environment 5.95s)
+
+
+> filter@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v4.1.10 .
+      Coverage enabled with v8
+
+
+ Test Files  31 passed (31)
+      Tests  153 passed (153)
+   Start at  12:42:43
+   Duration  1.88s (transform 1.16s, setup 1.27s, import 2.06s, tests 774ms, environment 12.32s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |    81.7 |    70.71 |   74.19 |   83.71 |                   
+ app               |   30.76 |    23.72 |   27.45 |   31.64 |                   
+  App.tsx          |   30.76 |    23.72 |   27.45 |   31.64 | ...93-248,302-414 
+ ...nts/AboutPanel |      80 |    66.66 |      75 |    87.5 |                   
+  AboutPanel.tsx   |      80 |    66.66 |      75 |    87.5 | 23                
+ ...s/ControlPanel |   76.92 |       50 |      50 |   76.92 |                   
+  ControlPanel.tsx |   76.92 |       50 |      50 |   76.92 | 61-93             
+ ...ducationDrawer |       0 |        0 |       0 |       0 |                   
+  ...ionDrawer.tsx |       0 |        0 |       0 |       0 | 12-49             
+ ...ts/EventLedger |   73.33 |    58.33 |     100 |   76.92 |                   
+  EventLedger.tsx  |   73.33 |    58.33 |     100 |   76.92 | 22-24,28          
+ ...cenarioPresets |   83.33 |        0 |   83.33 |      90 |                   
+  ...ioPresets.tsx |   83.33 |        0 |   83.33 |      90 | 16                
+ ...ts/ShareDialog |       0 |        0 |       0 |       0 |                   
+  ShareDialog.tsx  |       0 |        0 |       0 |       0 | 13-47             
+ .../SilenceReport |     100 |     87.5 |     100 |     100 |                   
+  ...nceReport.tsx |     100 |     87.5 |     100 |     100 | 49                
+ ...lationControls |      25 |        0 |       0 |      25 |                   
+  ...nControls.tsx |      25 |        0 |       0 |      25 | 25-45             
+ ...ents/StatusBar |       0 |        0 |       0 |       0 |                   
+  StatusBar.tsx    |       0 |        0 |       0 |       0 | 19                
+ renderer          |    71.9 |     64.4 |   82.35 |    74.1 |                   
+  capability.ts    |   33.33 |    76.92 |      50 |   33.33 | 21-25             
+  color_system.ts  |      80 |    72.72 |     100 |      80 | 26,39             
+  ...k_renderer.ts |   58.73 |       40 |      75 |   62.06 | 48-55,58-65,80-87 
+  render_model.ts  |   94.28 |       80 |     100 |   96.77 | 86                
+ simulation        |   95.01 |     87.3 |     100 |   97.26 |                   
+  engine.ts        |   93.98 |    83.83 |     100 |   99.48 | 466               
+  galaxy.ts        |     100 |       75 |     100 |     100 | 41                
+  metrics.ts       |   96.89 |    88.37 |     100 |   98.05 | 182,216           
+  scenario.ts      |     100 |    85.71 |     100 |     100 | 58-63             
+  schema.ts        |     100 |    94.73 |     100 |     100 | 48,56             
+  serialization.ts |   97.15 |    94.11 |     100 |   98.94 | 51,176            
+  worker_host.ts   |   76.31 |    65.11 |     100 |   78.87 | ...53-162,168-173 
+ state             |   82.58 |    72.88 |   94.11 |    87.4 |                   
+  ...tion_store.ts |   77.57 |    67.34 |    90.9 |   83.87 | ...43-244,251-254 
+  ui_store.ts      |   94.87 |      100 |     100 |   97.05 | 69                
+  url_state.ts     |   88.88 |      100 |     100 |    87.5 | 16                
+ utils             |   97.61 |    91.42 |     100 |     100 |                   
+  math.ts          |   96.55 |    83.33 |     100 |     100 | 57-58,80          
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 81.7% ( 1188/1454 )
+Branches     : 70.71% ( 507/717 )
+Functions    : 74.19% ( 184/248 )
+Lines        : 83.71% ( 1090/1302 )
+================================================================================
+
+> filter@0.1.0 build
+> vite build && node scripts/write_build_metadata.mjs
+
+vite v8.1.4 building client environment for production...
+[2Ktransforming...✓ 64 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                              1.98 kB │ gzip:   0.68 kB
+dist/assets/simulation.worker-DFv7zZer.js   22.70 kB
+dist/assets/index-Cn10THvd.css               8.95 kB │ gzip:   2.34 kB
+dist/assets/AboutPanel-Bd7lvOi5.js           1.72 kB │ gzip:   0.74 kB
+dist/assets/EducationDrawer-DsnTtj8a.js      5.23 kB │ gzip:   2.36 kB
+dist/assets/index-D9OhGvCg.js              768.78 kB │ gzip: 208.84 kB
+
+✓ built in 134ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+build.json written: {"commit":"ef85755005a09ef5e3f1107d0a6573fed592a39d","buildTime":"2026-07-11T16:42:46.223Z","appVersion":"0.1.0","simulationModelVersion":1}
+
+> filter@0.1.0 check:bundle
+> node scripts/check_bundle.mjs
+
+ok    dist/apple_touch_icon.png  raw 4716  gzip 4574  ceiling 524288
+ok    dist/assets/AboutPanel-Bd7lvOi5.js  raw 1728  gzip 739  ceiling 184320
+ok    dist/assets/EducationDrawer-DsnTtj8a.js  raw 5238  gzip 2382  ceiling 184320
+ok    dist/assets/index-Cn10THvd.css  raw 8955  gzip 2355  ceiling 524288
+OVER  dist/assets/index-D9OhGvCg.js  raw 768781  gzip 206174  ceiling 184320
+ok    dist/assets/simulation.worker-DFv7zZer.js  raw 22704  gzip 7254  ceiling 184320
+ok    dist/build.json  raw 158  gzip 146  ceiling 524288
+ok    dist/favicon.svg  raw 755  gzip 345  ceiling 524288
+ok    dist/humans.txt  raw 270  gzip 219  ceiling 524288
+ok    dist/icon_192.png  raw 5244  gzip 5156  ceiling 524288
+ok    dist/icon_512.png  raw 20776  gzip 18033  ceiling 524288
+ok    dist/index.html  raw 1985  gzip 686  ceiling 524288
+ok    dist/mask_icon.svg  raw 383  gzip 194  ceiling 524288
+ok    dist/robots.txt  raw 111  gzip 107  ceiling 524288
+ok    dist/site.webmanifest  raw 537  gzip 294  ceiling 524288
+ok    dist/social_preview.png  raw 77169  gzip 70781  ceiling 524288
+ok    dist/social_preview.svg  raw 16488  gzip 2849  ceiling 524288
+initial JS total gzip: 216549 (ceiling 307200)
+check_bundle: 1 ceiling overage(s). Mode: WARN (draft ceilings, R024 pre G7)
+
+> filter@0.1.0 test:e2e
+> playwright test tests/e2e
+
+
+Running 90 tests using 3 workers
+
+  ✓   1 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (151ms)
+  ✓   4 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (102ms)
+  ✓   5 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (122ms)
+  ✓   6 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (108ms)
+  ✓   7 [chromium] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (105ms)
+  ✓   2 [chromium] › tests/e2e/features.spec.ts:5:1 › the field guide opens and explains the model (FR012, BR003) (1.0s)
+  ✓   3 [chromium] › tests/e2e/default_run.spec.ts:5:1 › a default run completes and produces the Silence Report (1.5s)
+  ✓   8 [chromium] › tests/e2e/keyboard.spec.ts:9:1 › the complete core path operates with keyboard only (1.2s)
+  ✓   9 [chromium] › tests/e2e/features.spec.ts:13:1 › the About panel shows version identifiers (OPS009) (962ms)
+  ✓  10 [chromium] › tests/e2e/default_run.spec.ts:33:1 › the event ledger opens and fills during a run (FR006) (1.8s)
+  ✓  11 [chromium] › tests/e2e/mobile.spec.ts:7:1 › the core path works at a mobile viewport (1.6s)
+  ✓  13 [chromium] › tests/e2e/onboarding.spec.ts:5:1 › opening state offers both entry paths (214ms)
+  ✓  15 [chromium] › tests/e2e/onboarding.spec.ts:17:1 › preset path lands in configuration with the preset applied (193ms)
+  ✓  16 [chromium] › tests/e2e/onboarding.spec.ts:26:1 › footer carries identity, links, and version (REL007, OPS009) (174ms)
+  ✓  17 [chromium] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (140ms)
+  ✓  14 [chromium] › tests/e2e/reduced_motion.spec.ts:7:1 › a full run works under prefers-reduced-motion (1.5s)
+  ✓  12 [chromium] › tests/e2e/features.spec.ts:20:1 › the last scenario restores on the next visit, and clearing removes it (FR14, FR13) (3.1s)
+  ✓  20 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (959ms)
+  ✓  19 [firefox] › tests/e2e/default_run.spec.ts:5:1 › a default run completes and produces the Silence Report (1.3s)
+  ✓  21 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (245ms)
+  ✓  18 [chromium] › tests/e2e/share_scenario.spec.ts:6:1 › a shared scenario reproduces the identical run (3.3s)
+  ✓  22 [firefox] › tests/e2e/default_run.spec.ts:33:1 › the event ledger opens and fills during a run (FR006) (426ms)
+  ✓  23 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (231ms)
+  ✓  25 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (208ms)
+  ✓  24 [firefox] › tests/e2e/keyboard.spec.ts:9:1 › the complete core path operates with keyboard only (337ms)
+  ✓  27 [firefox] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (214ms)
+  ✓  29 [firefox] › tests/e2e/onboarding.spec.ts:5:1 › opening state offers both entry paths (265ms)
+  ✓  28 [firefox] › tests/e2e/mobile.spec.ts:7:1 › the core path works at a mobile viewport (410ms)
+  ✓  30 [firefox] › tests/e2e/onboarding.spec.ts:17:1 › preset path lands in configuration with the preset applied (290ms)
+  ✓  31 [firefox] › tests/e2e/reduced_motion.spec.ts:7:1 › a full run works under prefers-reduced-motion (418ms)
+  ✓  32 [firefox] › tests/e2e/onboarding.spec.ts:26:1 › footer carries identity, links, and version (REL007, OPS009) (224ms)
+  ✓  33 [firefox] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (212ms)
+  ✓  34 [firefox] › tests/e2e/share_scenario.spec.ts:6:1 › a shared scenario reproduces the identical run (698ms)
+  ✓  26 [firefox] › tests/e2e/features.spec.ts:5:1 › the field guide opens and explains the model (FR012, BR003) (1.6s)
+  ✓  37 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (430ms)
+  ✓  35 [webkit] › tests/e2e/default_run.spec.ts:5:1 › a default run completes and produces the Silence Report (931ms)
+  ✓  36 [firefox] › tests/e2e/features.spec.ts:13:1 › the About panel shows version identifiers (OPS009) (1.1s)
+  ✓  38 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (230ms)
+  ✓  41 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (232ms)
+  ✓  39 [webkit] › tests/e2e/default_run.spec.ts:33:1 › the event ledger opens and fills during a run (FR006) (483ms)
+  ✓  42 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (223ms)
+  ✓  44 [webkit] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (220ms)
+  ✓  45 [webkit] › tests/e2e/keyboard.spec.ts:9:1 › the complete core path operates with keyboard only (342ms)
+  ✓  43 [webkit] › tests/e2e/features.spec.ts:5:1 › the field guide opens and explains the model (FR012, BR003) (1.1s)
+  ✓  46 [webkit] › tests/e2e/mobile.spec.ts:7:1 › the core path works at a mobile viewport (389ms)
+  ✓  48 [webkit] › tests/e2e/onboarding.spec.ts:5:1 › opening state offers both entry paths (318ms)
+  ✓  40 [firefox] › tests/e2e/features.spec.ts:20:1 › the last scenario restores on the next visit, and clearing removes it (FR14, FR13) (2.1s)
+  ✓  49 [webkit] › tests/e2e/onboarding.spec.ts:17:1 › preset path lands in configuration with the preset applied (365ms)
+  ✓  50 [webkit] › tests/e2e/onboarding.spec.ts:26:1 › footer carries identity, links, and version (REL007, OPS009) (228ms)
+  ✓  47 [webkit] › tests/e2e/features.spec.ts:13:1 › the About panel shows version identifiers (OPS009) (1.1s)
+  ✓  51 [webkit] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (233ms)
+  ✓  52 [webkit] › tests/e2e/reduced_motion.spec.ts:7:1 › a full run works under prefers-reduced-motion (753ms)
+  ✓  54 [webkit] › tests/e2e/share_scenario.spec.ts:6:1 › a shared scenario reproduces the identical run (901ms)
+  ✓  56 [mobile-safari] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (409ms)
+  ✓  57 [mobile-safari] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (217ms)
+  ✓  55 [mobile-safari] › tests/e2e/default_run.spec.ts:5:1 › a default run completes and produces the Silence Report (835ms)
+  ✓  53 [webkit] › tests/e2e/features.spec.ts:20:1 › the last scenario restores on the next visit, and clearing removes it (FR14, FR13) (2.2s)
+  ✓  58 [mobile-safari] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (225ms)
+  ✓  60 [mobile-safari] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (237ms)
+  ✓  59 [mobile-safari] › tests/e2e/default_run.spec.ts:33:1 › the event ledger opens and fills during a run (FR006) (497ms)
+  ✓  62 [mobile-safari] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (218ms)
+  ✓  63 [mobile-safari] › tests/e2e/keyboard.spec.ts:9:1 › the complete core path operates with keyboard only (360ms)
+  ✓  64 [mobile-safari] › tests/e2e/mobile.spec.ts:7:1 › the core path works at a mobile viewport (484ms)
+  ✓  65 [mobile-safari] › tests/e2e/onboarding.spec.ts:5:1 › opening state offers both entry paths (281ms)
+  ✓  66 [mobile-safari] › tests/e2e/reduced_motion.spec.ts:7:1 › a full run works under prefers-reduced-motion (493ms)
+  ✓  61 [mobile-safari] › tests/e2e/features.spec.ts:5:1 › the field guide opens and explains the model (FR012, BR003) (1.2s)
+  ✓  68 [mobile-safari] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (223ms)
+  ✓  70 [mobile-safari] › tests/e2e/share_scenario.spec.ts:6:1 › a shared scenario reproduces the identical run (842ms)
+  ✓  69 [mobile-safari] › tests/e2e/features.spec.ts:13:1 › the About panel shows version identifiers (OPS009) (1.1s)
+  ✓  71 [mobile-safari] › tests/e2e/features.spec.ts:20:1 › the last scenario restores on the next visit, and clearing removes it (FR14, FR13) (1.8s)
+  ✓  67 [mobile-safari] › tests/e2e/onboarding.spec.ts:17:1 › preset path lands in configuration with the preset applied (3.6s)
+  ✓  73 [mobile-safari] › tests/e2e/onboarding.spec.ts:26:1 › footer carries identity, links, and version (REL007, OPS009) (293ms)
+  ✓  74 [mobile-chrome] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture crowded_maximum_contact digests identically in this engine (166ms)
+  ✓  75 [mobile-chrome] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture default digests identically in this engine (173ms)
+  ✓  77 [mobile-chrome] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture expansion_reached digests identically in this engine (154ms)
+  ✓  78 [mobile-chrome] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture silent_minimum_contact digests identically in this engine (153ms)
+  ✓  72 [mobile-chrome] › tests/e2e/default_run.spec.ts:5:1 › a default run completes and produces the Silence Report (2.9s)
+  ✓  79 [mobile-chrome] › tests/e2e/determinism_cross_engine.spec.ts:18:3 › fixture zero_detectable digests identically in this engine (142ms)
+  ✓  76 [mobile-chrome] › tests/e2e/features.spec.ts:5:1 › the field guide opens and explains the model (FR012, BR003) (1.1s)
+  ✓  82 [mobile-chrome] › tests/e2e/features.spec.ts:13:1 › the About panel shows version identifiers (OPS009) (974ms)
+  ✓  81 [mobile-chrome] › tests/e2e/keyboard.spec.ts:9:1 › the complete core path operates with keyboard only (4.9s)
+  ✓  80 [mobile-chrome] › tests/e2e/default_run.spec.ts:33:1 › the event ledger opens and fills during a run (FR006) (5.4s)
+  ✓  85 [mobile-chrome] › tests/e2e/onboarding.spec.ts:5:1 › opening state offers both entry paths (219ms)
+  ✓  86 [mobile-chrome] › tests/e2e/onboarding.spec.ts:17:1 › preset path lands in configuration with the preset applied (266ms)
+  ✓  87 [mobile-chrome] › tests/e2e/onboarding.spec.ts:26:1 › footer carries identity, links, and version (REL007, OPS009) (160ms)
+  ✓  83 [mobile-chrome] › tests/e2e/features.spec.ts:20:1 › the last scenario restores on the next visit, and clearing removes it (FR14, FR13) (6.9s)
+  ✓  89 [mobile-chrome] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (247ms)
+  ✓  84 [mobile-chrome] › tests/e2e/mobile.spec.ts:7:1 › the core path works at a mobile viewport (5.2s)
+  ✓  88 [mobile-chrome] › tests/e2e/reduced_motion.spec.ts:7:1 › a full run works under prefers-reduced-motion (5.1s)
+  ✓  90 [mobile-chrome] › tests/e2e/share_scenario.spec.ts:6:1 › a shared scenario reproduces the identical run (6.8s)
+
+  90 passed (37.4s)
+
+> filter@0.1.0 test:a11y
+> playwright test tests/accessibility
+
+
+Running 5 tests using 3 workers
+
+  ✓  2 [chromium] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (328ms)
+  ✓  1 [webkit] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (728ms)
+  ✓  3 [firefox] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (993ms)
+  ✓  4 [mobile-safari] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (743ms)
+  ✓  5 [mobile-chrome] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (333ms)
+
+  5 passed (2.3s)

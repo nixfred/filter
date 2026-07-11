@@ -1,0 +1,5 @@
+# The Great Filter, filter.nixfred.com
+User-agent: *
+Allow: /
+
+Sitemap: https://filter.nixfred.com/sitemap.xml
