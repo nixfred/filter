@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "simulationModelVersion": 1,
+  "advanced": {
+    "representativePopulationSize": 256,
+    "runHorizonYears": 10000000000
+  },
+  "seedA": 1000007,
+  "seedB": 2000008,
+  "controls": {
+    "lifeEmergence": 0.8,
+    "intelligenceEmergence": 0.7,
+    "technologicalTransition": 0.8,
+    "longTermSurvival": 0.95,
+    "detectableCommunication": 0.7,
+    "interstellarExpansion": 0.95
+  }
+}

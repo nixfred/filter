@@ -237,7 +237,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, transitions and hazards suites plus invariants)"
  },
  {
   "id": "FR017",
@@ -249,7 +249,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2 scope: Node digests and intra engine property proven, docs/evidence/g2_simulation_tests.txt; cross engine browser assertion lands with the app harness at G3)"
  },
  {
   "id": "FR018",
@@ -261,7 +261,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2 scope: worker protocol, backpressure, real worker digest parity; browser responsiveness verifies at G3, frame protocol at G5)"
  },
  {
   "id": "FR019",
@@ -273,7 +273,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, light_cone suite plus invariant 3)"
  },
  {
   "id": "FR020",
@@ -285,7 +285,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, civilization truncation suite plus invariant 5)"
  },
  {
   "id": "FR021",
@@ -297,7 +297,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, civilization frontier suite plus invariant 4)"
  },
  {
   "id": "FR022",
@@ -309,7 +309,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, contact suite: simultaneity never suffices)"
  },
  {
   "id": "FR023",
@@ -321,7 +321,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, galaxy suite: bounded representative population with documented weighting)"
  },
  {
   "id": "FR024",
@@ -345,7 +345,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, events queue suite plus invariant 1, monotonic log proven)"
  },
  {
   "id": "FR026",
@@ -357,7 +357,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, schema suite plus invariant 8, fail closed decode)"
  },
  {
   "id": "FR027",
@@ -369,7 +369,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, metrics suite plus invariant 6, fifteen fields filled)"
  },
  {
   "id": "FR028",
@@ -441,7 +441,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, five committed fixtures with digests at model version 1, docs/evidence/g2_simulation_tests.txt)"
  },
  {
   "id": "UX001",
@@ -609,7 +609,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, compact wire encoding and digest byte buffers; message contract tested)"
  },
  {
   "id": "NFR008",
@@ -633,7 +633,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Quality",
-  "status": "PLANNED"
+  "status": "PASSING (G2 local: 96.41 percent lines overall, simulation floor exceeded, docs/evidence/g2_coverage.txt; CI job enforcement wires at G6)"
  },
  {
   "id": "NFR010",
@@ -741,7 +741,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Security",
-  "status": "PLANNED"
+  "status": "PASSING (G2, hostile input clamping and rejection deterministic, corruption fails closed)"
  },
  {
   "id": "SEC003",
@@ -849,7 +849,7 @@
   "first_gate": "G2",
   "standing": "YES",
   "owner": "Engineering",
-  "status": "PLANNED"
+  "status": "PASSING (G2, serialization and round trip suites, docs/evidence/g2_check_all.txt)"
  },
  {
   "id": "DATA002",

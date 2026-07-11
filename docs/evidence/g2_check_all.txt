@@ -1,0 +1,121 @@
+
+> filter@0.1.0 check:all
+> npm run format:check && npm run lint && npm run typecheck && npm run test:simulation && npm run test:coverage && npm run build && npm run check:bundle && npm run test:e2e && npm run test:a11y
+
+
+> filter@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> filter@0.1.0 lint
+> eslint .
+
+
+> filter@0.1.0 typecheck
+> tsc -b
+
+
+> filter@0.1.0 test:simulation
+> vitest run tests/unit/simulation
+
+
+ RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
+
+
+ Test Files  15 passed (15)
+      Tests  77 passed (77)
+   Start at  10:15:42
+   Duration  1.34s (transform 731ms, setup 1.07s, import 893ms, tests 240ms, environment 9.85s)
+
+
+> filter@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
+      Coverage enabled with v8
+
+
+ Test Files  19 passed (19)
+      Tests  99 passed (99)
+   Start at  10:15:44
+   Duration  1.50s (transform 826ms, setup 1.02s, import 1.22s, tests 580ms, environment 9.20s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|---------------------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s               
+-------------------|---------|----------|---------|---------|---------------------------------
+All files          |   94.09 |     84.7 |     100 |   96.41 |                                 
+ simulation        |    93.9 |    84.77 |     100 |   96.16 |                                 
+  engine.ts        |   92.59 |    78.78 |     100 |   98.45 | 449,513-514                     
+  galaxy.ts        |     100 |       75 |     100 |     100 | 41                              
+  metrics.ts       |   95.34 |    84.88 |     100 |   96.11 | 182,213-216                     
+  scenario.ts      |     100 |    85.71 |     100 |     100 | 58-63                           
+  schema.ts        |     100 |    94.73 |     100 |     100 | 48,56                           
+  serialization.ts |   97.15 |    94.11 |     100 |   98.94 | 51,176                          
+  worker_host.ts   |   70.66 |    60.46 |     100 |   72.85 | 110-116,122-133,142-151,157-162 
+ utils             |   96.55 |    83.33 |     100 |     100 |                                 
+  math.ts          |   96.55 |    83.33 |     100 |     100 | 57-58,80                        
+-------------------|---------|----------|---------|---------|---------------------------------
+
+=============================== Coverage summary ===============================
+Statements   : 94.09% ( 828/880 )
+Branches     : 84.7% ( 349/412 )
+Functions    : 100% ( 95/95 )
+Lines        : 96.41% ( 754/782 )
+================================================================================
+
+> filter@0.1.0 build
+> vite build && node scripts/write_build_metadata.mjs
+
+vite v8.1.4 building client environment for production...
+[2Ktransforming...✓ 19 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.68 kB │ gzip:  0.41 kB
+dist/assets/index-C-f2x1n7.css    1.91 kB │ gzip:  0.86 kB
+dist/assets/index-BZn74GzC.js   191.02 kB │ gzip: 60.24 kB
+
+✓ built in 72ms
+build.json written: {"commit":"28fd03a9fcbce3dc3ee8b9b5e5f93f90f22440f9","buildTime":"2026-07-11T14:15:46.341Z","appVersion":"0.1.0","simulationModelVersion":1}
+
+> filter@0.1.0 check:bundle
+> node scripts/check_bundle.mjs
+
+ok    dist/assets/index-BZn74GzC.js  raw 191024  gzip 59552  ceiling 184320
+ok    dist/assets/index-C-f2x1n7.css  raw 1919  gzip 870  ceiling 524288
+ok    dist/build.json  raw 158  gzip 146  ceiling 524288
+ok    dist/favicon.svg  raw 755  gzip 345  ceiling 524288
+ok    dist/index.html  raw 683  gzip 416  ceiling 524288
+initial JS total gzip: 59552 (ceiling 307200)
+check_bundle: all ceilings met.
+
+> filter@0.1.0 test:e2e
+> playwright test tests/e2e
+
+
+Running 5 tests using 5 workers
+
+  ✓  1 [chromium] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (387ms)
+  ✓  5 [mobile-chrome] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (411ms)
+  ✓  3 [mobile-safari] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (994ms)
+  ✓  2 [webkit] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (1.0s)
+  ✓  4 [firefox] › tests/e2e/scaffold_smoke.spec.ts:7:1 › scaffold serves the opening state (883ms)
+
+  5 passed (2.5s)
+
+> filter@0.1.0 test:a11y
+> playwright test tests/accessibility
+
+
+Running 5 tests using 5 workers
+
+  ✓  1 [chromium] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (380ms)
+  ✓  3 [mobile-chrome] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (418ms)
+  ✓  4 [mobile-safari] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (819ms)
+  ✓  2 [webkit] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (882ms)
+  ✓  5 [firefox] › tests/accessibility/core_flows.spec.ts:7:1 › opening state has no axe violations (1.0s)
+
+  5 passed (2.5s)

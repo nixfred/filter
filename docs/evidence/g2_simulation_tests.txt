@@ -1,0 +1,13 @@
+
+> filter@0.1.0 test:simulation
+> vitest run tests/unit/simulation
+
+
+ RUN  v4.1.10 /Users/pi/Projects/filter.nixfred.com
+
+
+ Test Files  15 passed (15)
+      Tests  77 passed (77)
+   Start at  10:16:18
+   Duration  2.30s (transform 2.27s, setup 2.90s, import 2.93s, tests 378ms, environment 14.17s)
+
