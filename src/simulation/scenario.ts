@@ -2,7 +2,41 @@
 // (docs/DATA_MODEL.md sections 1.1 and 1.2, ruling R018 hidden blend).
 import { SIMULATION_MODEL_VERSION } from './model_version';
 import type { AdvancedParams, EffectiveParameters, MainControls, Scenario } from './types';
-import { clamp, clamp01 } from '../utils/math';
+import { clamp, clamp01, u16ToUnit, unitToU16 } from '../utils/math';
+
+/** Snap a 0..1 value to the uint16 wire grid. */
+function snapUnit(x: number): number {
+  return u16ToUnit(unitToU16(x));
+}
+
+/**
+ * The six main controls travel as uint16 in the share URL, so the value a run
+ * uses must be the value a shared link carries (FR008). Snapping to the grid
+ * at creation guarantees a run and its shared reproduction are identical,
+ * rather than differing by the quantization the encoding introduces.
+ */
+function snapControls(controls: MainControls): MainControls {
+  return {
+    lifeEmergence: snapUnit(controls.lifeEmergence),
+    intelligenceEmergence: snapUnit(controls.intelligenceEmergence),
+    technologicalTransition: snapUnit(controls.technologicalTransition),
+    longTermSurvival: snapUnit(controls.longTermSurvival),
+    detectableCommunication: snapUnit(controls.detectableCommunication),
+    interstellarExpansion: snapUnit(controls.interstellarExpansion),
+  };
+}
+
+/** Snap the uint16 scaled advanced override fields to the wire grid (FR008). */
+function snapUnitOverride(advanced: AdvancedParams): AdvancedParams {
+  const snapped: AdvancedParams = { ...advanced };
+  if (snapped.detectionRecognitionThreshold !== undefined) {
+    snapped.detectionRecognitionThreshold = snapUnit(snapped.detectionRecognitionThreshold);
+  }
+  if (snapped.expansionEffectiveSpeedFractionC !== undefined) {
+    snapped.expansionEffectiveSpeedFractionC = snapUnit(snapped.expansionEffectiveSpeedFractionC);
+  }
+  return snapped;
+}
 
 export const SCHEMA_VERSION = 1;
 
@@ -39,8 +73,8 @@ export function createScenario(
     simulationModelVersion: SIMULATION_MODEL_VERSION,
     seedA: seedA >>> 0,
     seedB: seedB >>> 0,
-    controls: { ...DEFAULT_CONTROLS, ...controls },
-    advanced: { ...advanced },
+    controls: snapControls({ ...DEFAULT_CONTROLS, ...controls }),
+    advanced: snapUnitOverride(advanced),
   };
 }
 

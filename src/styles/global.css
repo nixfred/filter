@@ -152,17 +152,23 @@ body {
   color: var(--color-star-white);
 }
 
-/* The six controls share the available height evenly and never overflow. */
-.control-list {
+/* The scroll region holds the six main controls and the advanced section.
+   It fits without scrolling when advanced is closed; opening advanced adds
+   controls and the region scrolls, while Start stays pinned in the footer. */
+.control-scroll {
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.control-list {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: clamp(0.35rem, 1.1vh, 0.85rem);
-  /* Fits without scrolling on normal viewports; only very short windows
-     scroll, rather than clipping a control. */
-  overflow-y: auto;
 }
 
 .control {
@@ -959,4 +965,97 @@ body {
   letter-spacing: 0.12em;
   color: var(--color-text-tertiary);
   z-index: 2;
+}
+
+/* Advanced settings section and its controls (FR003). */
+.advanced-section {
+  flex-shrink: 0;
+  padding-top: 0.6rem;
+  margin-top: 0.6rem;
+  border-top: 1px solid var(--color-bg-overlay);
+}
+
+.control-advanced-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.adv-badge {
+  font-family: var(--font-data);
+  font-size: 0.6rem;
+  background: var(--color-tech-gold);
+  color: var(--color-text-inverse);
+  border-radius: 999px;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.advanced-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+
+.adv-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.adv-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.adv-label {
+  font-size: var(--type-sm);
+  color: var(--color-text-primary);
+}
+
+.adv-value {
+  font-family: var(--font-data);
+  font-size: var(--type-xs);
+  color: var(--color-tech-gold);
+}
+
+.adv-control input[type='range'] {
+  width: 100%;
+  accent-color: var(--color-signal-violet);
+  margin: 0;
+}
+
+.adv-segment {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.3rem;
+}
+
+.adv-segment button {
+  background: var(--color-bg-overlay);
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.35rem 0;
+  font-family: var(--font-data);
+  font-size: var(--type-xs);
+  cursor: pointer;
+  min-height: 34px;
+}
+
+.adv-seg-active {
+  border-color: var(--color-signal-violet) !important;
+  color: var(--color-signal-violet-bright) !important;
+}
+
+.adv-reset {
+  margin-top: 0.2rem;
+  align-self: flex-start;
 }

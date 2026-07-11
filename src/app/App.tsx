@@ -23,7 +23,7 @@ import {
 } from '../simulation/scenario';
 import { SIMULATION_MODEL_VERSION } from '../simulation/model_version';
 import { decodeScenario, encodeScenario } from '../simulation/serialization';
-import type { MainControls } from '../simulation/types';
+import type { AdvancedParams, MainControls } from '../simulation/types';
 import { scenarioFromSearch } from '../state/url_state';
 import { createAnnouncer } from '../utils/accessibility';
 import { formatYears } from '../utils/format';
@@ -79,6 +79,9 @@ export function App() {
   const [controls, setControls] = useState<MainControls>(() =>
     startup.scenario ? { ...startup.scenario.controls } : { ...DEFAULT_CONTROLS },
   );
+  const [advanced, setAdvanced] = useState<AdvancedParams>(() =>
+    startup.scenario ? { ...startup.scenario.advanced } : {},
+  );
   // FR008: a shared link reproduces the identical run, so its seed pair is
   // held and used by the next Start rather than drawing a fresh seed. A
   // restored scenario draws a fresh seed (a new visit, not the same run).
@@ -131,6 +134,7 @@ export function App() {
   function startOver() {
     simulation.reset();
     setControls({ ...DEFAULT_CONTROLS });
+    setAdvanced({});
     setPresetName(null);
     setPendingSeed(null);
     setReportDismissed(false);
@@ -161,6 +165,7 @@ export function App() {
     ui.clearLocalData();
     simulation.reset();
     setControls({ ...DEFAULT_CONTROLS });
+    setAdvanced({});
     setPresetName(null);
     setPendingSeed(null);
     setAboutOpen(false);
@@ -189,7 +194,7 @@ export function App() {
     const seedA = pendingSeed ? pendingSeed.a : randomSeed();
     const seedB = pendingSeed ? pendingSeed.b : randomSeed();
     setPendingSeed(null);
-    const scenario = createScenario(seedA, seedB, withControls);
+    const scenario = createScenario(seedA, seedB, withControls, advanced);
     simulation.start(scenario);
     setScreen('sim');
     setReportDismissed(false);
@@ -198,6 +203,7 @@ export function App() {
 
   function choosePreset(preset: Preset) {
     setControls({ ...preset.controls });
+    setAdvanced({});
     setPresetName(preset.name);
     setPresetsOpen(false);
     setScreen('config');
@@ -392,11 +398,13 @@ export function App() {
         <main id="main" className="config-layout">
           <ControlPanel
             controls={controls}
+            advanced={advanced}
             presetName={presetName}
             onChange={(next) => {
               setControls(next);
               setPresetName(null);
             }}
+            onAdvancedChange={setAdvanced}
             onStart={() => startRun(controls)}
           />
           <div className="config-canvas" aria-hidden="true">
@@ -464,6 +472,7 @@ export function App() {
               onNewGalaxy={() => {
                 simulation.reset();
                 setControls({ ...DEFAULT_CONTROLS });
+                setAdvanced({});
                 setPresetName(null);
                 setScreen('config');
               }}
